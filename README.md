@@ -40,7 +40,6 @@ Os grafismos dos cartões mantêm coordenadas próprias do Figma dentro de peque
 ## Pendentes
 
 - PDF ou URL público do CV. O botão apresenta estado de atualização.
-- URL confirmado do perfil LinkedIn.
 - Vídeos dos protótipos: as páginas apresentam pré-visualizações estáticas exportadas dos respetivos nós Figma.
 - Repositório GitHub, alojamento e domínio.
 

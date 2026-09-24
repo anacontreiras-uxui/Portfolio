@@ -46,6 +46,41 @@ document.addEventListener('keydown', event => {
 });
 mobile.addEventListener('change', () => setMenu(false));
 
+const revealSelector = [
+  'main > section', 'main > .case-back', 'footer.footer',
+  '.about-heading', '.bio', '.portrait', '.projects-heading', '.section-heading', '.section-description',
+  '.contact-page > h1', '.contact-intro', '.project-card',
+  '.value-card', '.competency-card', '.timeline > article', '.tool-group',
+  '.case-heading', '.case-overview > article', '.case-research-grid > *',
+  '.case-methods > article', '.case-stats > *', '.case-insight-track > article',
+  '.case-architecture-list > article', '.case-tabs', '.case-compare-grid > article',
+  '.case-hotspots > article', '.case-impact-grid > article', '.case-closing blockquote',
+  '.case-project-nav', '.contact-panels > *', '.contact-seeking'
+].join(',');
+
+if ('IntersectionObserver' in window && !reducedMotion.matches) {
+  const revealTargets = [...document.querySelectorAll(revealSelector)];
+  const revealGroups = new Map();
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('scroll-reveal-visible');
+      revealObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -32px 0px' });
+
+  revealTargets
+    .filter(target => !target.querySelector(revealSelector))
+    .forEach(target => {
+      const groupIndex = revealGroups.get(target.parentElement) || 0;
+      revealGroups.set(target.parentElement, groupIndex + 1);
+      const stagger = mobile.matches ? 50 : 70;
+      target.style.setProperty('--scroll-reveal-delay', `${Math.min(groupIndex * stagger, mobile.matches ? 200 : 280)}ms`);
+      target.classList.add('scroll-reveal');
+      revealObserver.observe(target);
+    });
+}
+
 // Preserve the composition of the original Figma artwork at every card width.
 // SVGs keep their intrinsic dimensions; only their containing artboard scales.
 const artworks = document.querySelectorAll('.art');
@@ -114,7 +149,6 @@ function showNotice(title, description) {
   notice.showModal();
 }
 document.querySelector('#cv-button')?.addEventListener('click', () => showNotice('CV em atualização', 'O CV estará disponível em breve. Entretanto, podes contactar-me através de anacontreiras.arch@gmail.com.'));
-document.querySelectorAll('#linkedin-button, [data-linkedin]').forEach(button => button.addEventListener('click', () => showNotice('LinkedIn', 'O link do perfil estará disponível em breve. Podes contactar-me através de anacontreiras.arch@gmail.com.')));
 notice.addEventListener('click', event => {
   const rect = notice.getBoundingClientRect();
   if (event.target === notice && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) notice.close();

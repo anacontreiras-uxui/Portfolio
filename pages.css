@@ -14,6 +14,13 @@
 .values .section-heading { font-size: 32px; font-weight: 600; line-height: 47px; letter-spacing: 0; }
 .value-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 32px; margin-top: 32px; }
 .value-card { background: var(--card); border: 1px solid #2d2d2d1a; border-bottom: 4px solid var(--sage); border-radius: 24px; padding: 32px; min-height: 240px; }
+.value-card, .competency-card { transition: transform .2s ease, box-shadow .2s ease; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .value-card:hover, .competency-card:hover { transform: scale(1.015); box-shadow: 0 8px 20px #2d2d2d12; }
+}
+@media (hover: hover) and (prefers-reduced-motion: reduce) {
+  .value-card:hover, .competency-card:hover { box-shadow: 0 6px 16px #2d2d2d10; }
+}
 .value-icon { width: 48px; height: 48px; background: var(--sage); display: flex; align-items: center; justify-content: center; border-radius: 50%; box-shadow: 0 4px 6px #0000001a; margin-bottom: 16px; }
 .value-card h3, .competency-card h3 { color: var(--green); font-size: 20px; line-height: 32px; font-weight: 500; margin-bottom: 8px; }
 .value-card p, .competency-card p { color: var(--muted); font-size: 16px; line-height: 22.75px; }
@@ -49,10 +56,15 @@
 .seeking h2 { font-size: 24px; font-weight: 500; line-height: 32px; margin-bottom: 24px; }
 .seeking p { max-width: 1000px; margin: auto; font-size: 16px; line-height: 26px; color: var(--muted); }
 .about-quote { padding-top: 48px; }
-.contact-page { max-width: 1128px; margin: auto; padding: 16px 40px 32px; display: flex; flex-direction: column; align-items: center; gap: 32px; }
+.contact-page { max-width: 1136px; margin: auto; padding: 16px 40px 32px; display: flex; flex-direction: column; align-items: center; gap: 56px; }
 .contact-page h1 { font-size: 32px; line-height: 40px; font-weight: 600; letter-spacing: 0; text-align: center; width: auto; }
+.contact-page h1 + .contact-intro { margin-top: -24px; }
 .contact-intro { max-width: 700px; font-size: 16px; line-height: 26px; text-align: center; color: #2d2d2dcc; }
-.contact-panels { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 48px; align-items: center; width: 100%; }
+.contact-panels { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 56px; align-items: center; width: 100%; }
+.contact-panels > * { min-height: 215px; }
+@media (min-width: 1136px) {
+  .contact-panels > * { height: 215px; }
+}
 .contact-details { padding: 24px 32px; border: 1px solid #2a2a2a0d; border-radius: 10px; background: var(--card); display: flex; flex-direction: column; gap: 16px; }
 .contact-detail { display: flex; align-items: flex-start; gap: 24px; }
 .contact-detail > img { flex-shrink: 0; }
@@ -67,7 +79,10 @@
 .contact-seeking { width: 100%; padding: 32px; border-radius: 10px; background: #4162520d; border: .8px solid #4162521a; }
 .contact-seeking h2 { margin-bottom: 16px; line-height: 25px; }
 .contact-seeking p { font-size: 15px; line-height: 24.375px; }
-.contact-email { min-height: 40px; padding: 8px 28px; gap: 8px; border: 0; }
+.contact-email { gap: 14px; white-space: nowrap; }
+.contact-email img { flex-shrink: 0; }
+.contact-email:hover, .contact-email:focus-visible { background: #fff; color: var(--green); box-shadow: 0 0 0 1px var(--green); }
+.contact-email:hover img, .contact-email:focus-visible img { filter: brightness(0) saturate(100%) invert(34%) sepia(14%) saturate(731%) hue-rotate(96deg) brightness(96%) contrast(87%); }
 .footer-gradient { max-width: none; background: linear-gradient(90deg,var(--sage),var(--green)); color: var(--paper); }
 .footer-gradient .footer-columns { max-width: 1368px; margin: auto; }
 .footer-gradient :is(h2,h3,.copyright,.footer-nav) { color: var(--paper); }
@@ -88,7 +103,7 @@
   .tool-labels { display: none; }
   .tool-groups { gap: 32px; }
   .tool-group { gap: 16px; }
-  .contact-panels { gap: 24px; }
+  .contact-panels { gap: 56px; }
 }
 @media (max-width: 700px) {
   .back-row { padding: 16px 32px 0; }
@@ -124,9 +139,9 @@
   .timeline-copy .timeline-context { margin-bottom: 26px; }
   .seeking { padding: 24px 26px; }
   .about-quote { padding: 32px 39px; }
-  .contact-page { padding: 32px 24px; gap: 32px; }
+  .contact-page { padding: 32px 24px; gap: 56px; }
   .contact-page h1, .contact-intro { width: 100%; text-align: left; padding-inline: 10px; }
-  .contact-panels { grid-template-columns: 1fr; gap: 32px; }
+  .contact-panels { grid-template-columns: 1fr; gap: 56px; }
   .contact-details { gap: 10px; }
   .contact-detail h2 { font-size: 14px; }
   .contact-detail a, .contact-detail p, .contact-detail button { font-size: 12px; }

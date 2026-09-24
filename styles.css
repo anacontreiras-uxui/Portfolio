@@ -65,6 +65,11 @@ h1 em { font-family: 'Playfair Display', serif; font-weight: 800; color: var(--g
 .scroll-cue { height: 128px; display: flex; align-items: center; justify-content: center; }
 .scroll-cue a { padding: 12px; }
 .scroll-cue img { transform: rotate(90deg); animation: scroll-cue-bounce 1.6s ease-in-out infinite; }
+.scroll-reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease var(--scroll-reveal-delay, 0ms), transform .6s ease var(--scroll-reveal-delay, 0ms); }
+.scroll-reveal.scroll-reveal-visible { opacity: 1; transform: translateY(0); }
+@media (max-width: 700px) {
+  .scroll-reveal { transform: translateY(12px); transition-duration: .45s; }
+}
 @keyframes scroll-cue-bounce {
   0%, 100% { transform: translateY(-5px) rotate(90deg); }
   50% { transform: translateY(7px) rotate(90deg); }
@@ -115,7 +120,12 @@ h1 em { font-family: 'Playfair Display', serif; font-weight: 800; color: var(--g
 .contact { background: var(--green); color: var(--paper); padding: 48px 32px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 32px; }
 .contact h2 { font-family: 'Playfair Display',serif; font-size: 30px; font-weight: 500; line-height: 36px; }
 .contact p { max-width: 950px; font-size: 18px; line-height: 28px; }
+.contact .button, .contact-email { width: 244px; min-height: 48px; padding: 12px 24px; gap: 16px; border: 0; }
 .contact .button { background: var(--paper); color: var(--green); min-width: 244px; min-height: 48px; border: 0; }
+body:not(.inner-page) .contact .button:hover,
+body:not(.inner-page) .contact .button:focus-visible { background: var(--green); color: var(--paper); box-shadow: 0 0 0 1px var(--paper); }
+body:not(.inner-page) .contact .button:hover img,
+body:not(.inner-page) .contact .button:focus-visible img { filter: brightness(0) invert(1); }
 .footer { max-width: 1400px; padding: 24px 16px; margin: auto; font-size: 14px; }
 .footer-columns { display: grid; grid-template-columns: 305px 86px 305px; justify-content: space-between; gap: 32px; padding: 0 40px; }
 .footer-brand h2 { font-size: 20px; line-height: 28px; font-weight: 600; color: var(--green); margin-bottom: 8px; }
@@ -190,7 +200,7 @@ dialog .button { margin-top: 24px; width: 100%; }
   .contact { padding: 32px 18px; }
   .contact h2 { max-width: 349px; }
   .contact p { max-width: 357px; }
-  .contact .button { min-width: 214px; }
+  .contact .button, .contact-email { width: 226px; min-width: 214px; }
   .footer { padding: 16px 23px; }
   .footer-columns { display: flex; align-items: center; justify-content: space-between; padding: 0; gap: 12px; }
   .footer-brand, .footer h3, .footer-nav a:first-child, .contact-label, .location { display: none; }
@@ -214,6 +224,7 @@ dialog .button { margin-top: 24px; width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {
   :root { scroll-behavior: auto; }
+  .scroll-reveal { opacity: 1; transform: none; transition: none; }
   .scroll-cue img { animation: none; }
   .skills-marquee { animation: none; }
   *, *::before, *::after { transition: none !important; }

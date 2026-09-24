@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { networkInterfaces } from 'node:os';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.ttf': 'font/ttf', '.pdf': 'application/pdf' };
+const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.ttf': 'font/ttf', '.pdf': 'application/pdf' };
 const port = Number(process.env.PORT || 5173);
 const host = process.env.HOST || '0.0.0.0';
 createServer(async (req, res) => {
