@@ -90,6 +90,14 @@
 .footer-gradient .copyright { border-color: var(--line); }
 @media (min-width: 701px) {
   .inner-page .footer { font-weight: 400; }
+  .about-page .bio { font-size: 18px; line-height: 29px; }
+  .about-page .value-card p,
+  .about-page .competency-card p { font-size: 18px; line-height: 27px; }
+  .about-page .section-description { font-size: 20px; line-height: 30px; }
+  .about-page .tool-labels-inner { font-size: 18px; line-height: 34px; }
+  .about-page .timeline-copy { font-size: 18px; line-height: 29px; }
+  .about-page .seeking p { font-size: 18px; line-height: 29px; }
+  .about-page .about-quote { font-size: 24px; line-height: 34px; }
 }
 @media (min-width: 701px) and (max-width: 1100px) {
   .back-row { padding-inline: 40px; }
