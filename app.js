@@ -5,6 +5,21 @@ const languagePanel = document.querySelector('#language-panel');
 const mobile = window.matchMedia('(max-width: 700px)');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+// Keep the current desktop layout as the floor, then scale it with wider viewports.
+function syncDesktopScale() {
+  document.body.style.zoom = mobile.matches ? '' : String(Math.max(1, window.innerWidth / 1440));
+}
+syncDesktopScale();
+window.addEventListener('resize', syncDesktopScale, { passive: true });
+
+window.addEventListener('pageshow', () => {
+  const returnToTopAt = Number(sessionStorage.getItem('portfolio-return-to-top'));
+  if (!returnToTopAt) return;
+  sessionStorage.removeItem('portfolio-return-to-top');
+  if (Date.now() - returnToTopAt > 10000) return;
+  requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+});
+
 function setMenu(open) {
   mobileNav.hidden = !open;
   menuToggle.setAttribute('aria-expanded', String(open));
@@ -88,9 +103,15 @@ function resizeArtwork() {
   artworks.forEach(art => {
     const mode = mobile.matches ? 'mobile' : 'desktop';
     const canvas = art.querySelector(`.art-${mode}`);
-    const scale = art.clientWidth / (mode === 'mobile' ? 324 : 499);
+    const design = canvas.firstElementChild;
+    const designWidth = parseFloat(getComputedStyle(design).width);
+    const designHeight = parseFloat(getComputedStyle(design).height);
+    const scale = art.clientWidth / designWidth;
     canvas.style.transform = `scale(${scale})`;
-    art.style.height = `${201 * scale}px`;
+    const height = designHeight * scale;
+    if (Math.abs(art.getBoundingClientRect().height - height) > 0.5) {
+      art.style.height = `${height}px`;
+    }
   });
 }
 const artObserver = new ResizeObserver(resizeArtwork);

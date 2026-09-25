@@ -67,6 +67,7 @@ h1 em { font-family: 'Playfair Display', serif; font-weight: 800; color: var(--g
 .scroll-cue img { transform: rotate(90deg); animation: scroll-cue-bounce 1.6s ease-in-out infinite; }
 .scroll-reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease var(--scroll-reveal-delay, 0ms), transform .6s ease var(--scroll-reveal-delay, 0ms); }
 .scroll-reveal.scroll-reveal-visible { opacity: 1; transform: translateY(0); }
+.case-art.scroll-reveal, .case-art.scroll-reveal.scroll-reveal-visible { transform: none; }
 @media (max-width: 700px) {
   .scroll-reveal { transform: translateY(12px); transition-duration: .45s; }
 }
@@ -79,7 +80,7 @@ h1 em { font-family: 'Playfair Display', serif; font-weight: 800; color: var(--g
 .about p { font-size: 18px; line-height: 28px; color: var(--muted); }
 .mobile-copy { display: none; }
 .skills { height: 110px; overflow: hidden; display: flex; align-items: center; }
-.skills-track { display: flex; align-items: center; justify-content: center; gap: 6.4px; background: var(--green); color: var(--paper); height: 50px; min-width: 110%; margin-left: -5%; transform: rotate(-1.5deg); font-size: 14px; white-space: nowrap; }
+.skills-track { display: flex; align-items: center; justify-content: center; gap: 6.4px; background: var(--green); color: var(--paper); height: 50px; min-width: 110%; margin-left: -5%; transform: rotate(-1.5deg); font-size: 18px; white-space: nowrap; }
 .skills-track img { flex-shrink: 0; }
 .skills-track { overflow: hidden; justify-content: flex-start; }
 .skills-marquee { display: flex; width: max-content; flex-shrink: 0; animation: skills-scroll 65s linear infinite; }
@@ -100,8 +101,6 @@ h1 em { font-family: 'Playfair Display', serif; font-weight: 800; color: var(--g
 .art-desktop, .art-mobile { width: 499px; height: 201px; position: absolute; left: 0; top: 0; transform-origin: top left; }
 .art-mobile { display: none; width: 324px; }
 .art p { margin: 0; }
-/* Fit the mobile CUPRA wordmark inside its original 150px label slot. */
-.art-mobile [data-figma-node="288:5350"] { font-size: 20px !important; }
 .art .art-desktop > div, .art .art-mobile > div { overflow: hidden; }
 .project-link { display: flex; align-items: center; justify-content: center; position: absolute; right: 32px; top: 24px; width: 48px; height: 48px; border-radius: 50%; background: #fefefee6; box-shadow: 0 10px 15px #0000001a, 0 4px 6px #0000001a; z-index: 1; transition: transform .15s; }
 .project-link { transition: transform .15s, background-color .15s, box-shadow .15s; }
@@ -147,6 +146,24 @@ dialog h2 { font-size: 24px; margin-bottom: 16px; }
 dialog p { font-size: 16px; line-height: 26px; color: var(--muted); }
 dialog .button { margin-top: 24px; width: 100%; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+@media (min-width: 701px) {
+  .card-copy h3 { font-size: 24px; line-height: 30px; }
+  .card-subtitle { font-size: 18px; line-height: 27px; }
+  .card-description { font-size: 16px; line-height: 26px; }
+  .tags span { font-size: 14px; line-height: 20px; }
+  .projects-intro { font-size: 18px; line-height: 28px; }
+  body:not(.inner-page) .quote { font-size: 24px; line-height: 34px; }
+  .contact p { font-size: 20px; line-height: 30px; }
+  .contact .button, .contact-email { font-size: 18px; line-height: 26px; }
+  .brand span { font-size: 20px; line-height: 26px; font-weight: 400; }
+  .brand small { font-size: 15px; line-height: 20px; font-weight: 400; }
+  .nav a, .contact-nav { font-size: 18px; line-height: 26px; font-weight: 400; }
+  .footer { font-size: 18px; font-weight: 400; }
+  .footer-brand h2 { font-size: 24px; line-height: 32px; font-weight: 400; }
+  .footer-brand p, .footer-nav, .copyright { line-height: 27px; }
+  .footer h3 { font-size: 20px; line-height: 28px; font-weight: 400; }
+  .footer-contacts .contact-label { min-width: 0; overflow-wrap: anywhere; }
+}
 @media (max-width: 1100px) and (min-width: 701px) {
   .hero { padding-inline: 40px; column-gap: 32px; }
   .hero-description { font-size: 18px; }
@@ -175,7 +192,7 @@ dialog .button { margin-top: 24px; width: 100%; }
   .desktop-copy { display: none; }
   .mobile-copy { display: block; }
   .skills { height: 102px; }
-  .skills-track { height: 30px; min-width: 1487px; margin-left: -140px; transform: rotate(-1.57deg); }
+  .skills-track { height: 30px; min-width: 1487px; margin-left: -140px; transform: rotate(-1.57deg); font-size: 16px; }
   .projects { padding: 48px 0 0; }
   .projects-heading { padding: 0 36px; }
   .projects h2 { font-size: 32px; }
@@ -184,9 +201,11 @@ dialog .button { margin-top: 24px; width: 100%; }
   .project-grid { padding-right: max(32px, calc(100% - 356px)); }
   .project-grid::-webkit-scrollbar { display: none; }
   .project-card { flex: 0 0 324px; max-width: calc(100vw - 64px); min-height: 497px; scroll-snap-align: start; }
+  .project-card.scroll-reveal { transform: none; }
   .art-desktop { display: none; }
   .art-mobile { display: block; }
   .project-link { right: 24px; top: 24px; }
+  #projeto-2 .project-link { top: 6px; }
   .card-copy { padding: 24px 31px; }
   .card-copy h3 { line-height: 26px; }
   .tags { flex-wrap: nowrap; gap: 8px; }
@@ -217,7 +236,7 @@ dialog .button { margin-top: 24px; width: 100%; }
   .about h2 { font-size: 32px; }
   .card-copy { padding-inline: 20px; }
   .tags { gap: 5px; }
-  .tags span { padding-inline: 6px; font-size: 11px; }
+  .tags span { padding-inline: 6px; font-size: 12px; }
   .footer { padding-inline: 16px; }
   .footer-contacts { gap: 2px; }
   .footer-nav { gap: 6px; font-size: 12px; }

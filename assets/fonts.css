@@ -113,3 +113,10 @@
   font-display: swap;
   src: url('./fonts/playfair-italic-regular.ttf') format('truetype');
 }
+@font-face {
+  font-family: 'Ravi Prakash';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/ravi-prakash-regular.ttf') format('truetype');
+}

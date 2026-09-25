@@ -1,4 +1,13 @@
 // Scale composed Figma illustrations without changing individual SVG dimensions.
+document.querySelectorAll('[data-history-back]').forEach(link => {
+  link.addEventListener('click', event => {
+    if (window.history.length <= 1) return;
+    event.preventDefault();
+    sessionStorage.setItem('portfolio-return-to-top', String(Date.now()));
+    window.history.back();
+  });
+});
+
 const caseArtObserver = new ResizeObserver(entries => {
   for (const { target } of entries) {
     const scale = target.clientWidth / Number(target.dataset.caseWidth);
@@ -16,12 +25,29 @@ document.querySelectorAll('[data-case-width]').forEach(el => caseArtObserver.obs
 
 document.querySelectorAll('[data-case-tabs]').forEach(group => {
   const tabs = [...group.querySelectorAll('[role="tab"]')];
+  const panels = tabs.map(tab => document.getElementById(tab.getAttribute('aria-controls')));
+  const syncPanelVideos = () => {
+    const mobile = window.matchMedia('(max-width: 700px)').matches;
+    panels.forEach(panel => {
+      panel.querySelectorAll('.case-screen-video').forEach(video => {
+        const visibleVersion = mobile
+          ? video.closest('.case-panel-mobile')
+          : video.closest('.case-panel-desktop');
+        if (panel.hidden || !visibleVersion) {
+          video.pause();
+          return;
+        }
+        video.play().catch(() => {});
+      });
+    });
+  };
   function activate(index, focus = false) {
     tabs.forEach((tab, i) => {
       tab.setAttribute('aria-selected', String(i === index));
       tab.tabIndex = i === index ? 0 : -1;
       document.getElementById(tab.getAttribute('aria-controls')).hidden = i !== index;
     });
+    syncPanelVideos();
     if (focus) tabs[index].focus();
   }
   tabs.forEach((tab, i) => {
@@ -34,6 +60,8 @@ document.querySelectorAll('[data-case-tabs]').forEach(group => {
       activate(index, true);
     });
   });
+  window.addEventListener('resize', syncPanelVideos, { passive: true });
+  syncPanelVideos();
 });
 document.querySelectorAll('.case-range').forEach(input => {
   const comparison = document.getElementById(input.dataset.comparison);
@@ -79,10 +107,13 @@ let activeFeaturePopupArticle = null;
 let activeFeaturePopupAnchorBottom = null;
 
 function alignFeaturePopupToTrigger() {
-  if (!activeFeaturePopupPanel || activeFeaturePopupAnchorBottom === null) return;
+  if (!activeFeaturePopupPanel) return;
+  activeFeaturePopupAnchorBottom = activeFeaturePopupTrigger?.closest('.lifecare-device-card')?.getBoundingClientRect().bottom ?? null;
+  if (activeFeaturePopupAnchorBottom === null) return;
   activeFeaturePopupPanel.style.removeProperty('--popup-y-offset');
   const popupBottom = activeFeaturePopupPanel.getBoundingClientRect().bottom;
-  activeFeaturePopupPanel.style.setProperty('--popup-y-offset', `${activeFeaturePopupAnchorBottom - popupBottom}px`);
+  const desktopScale = parseFloat(getComputedStyle(document.body).zoom) || 1;
+  activeFeaturePopupPanel.style.setProperty('--popup-y-offset', `${(activeFeaturePopupAnchorBottom - popupBottom) / desktopScale}px`);
 }
 
 function closeFeaturePopup(restoreFocus = true) {
@@ -144,6 +175,16 @@ document.querySelectorAll('[data-hotspot-title]').forEach(button => {
     createFeaturePanel(button.dataset.device, button.dataset.hotspotTitle, button);
   });
 });
+
+window.addEventListener('resize', () => {
+  if (!activeFeaturePopupPanel || window.matchMedia('(max-width: 700px)').matches) return;
+  requestAnimationFrame(() => {
+    alignFeaturePopupToTrigger();
+  });
+  setTimeout(() => {
+    if (activeFeaturePopupPanel) alignFeaturePopupToTrigger();
+  }, 150);
+}, { passive: true });
 
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape') closeFeaturePopup();
