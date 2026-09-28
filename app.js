@@ -277,7 +277,7 @@ function showNotice(title, description) {
   notice.showModal();
 }
 document.querySelector('#cv-button')?.addEventListener('click', () => {
-  window.open('./assets/cv/ana-contreiras-cv.pdf', '_blank', 'noopener,noreferrer');
+  window.open('./assets/cv/Ana_Contreiras_CV_UXUI_PT.pdf', '_blank', 'noopener,noreferrer');
 });
 notice.addEventListener('click', event => {
   const rect = notice.getBoundingClientRect();
