@@ -89,6 +89,7 @@ window.portfolioTranslations = {
   "← Voltar": "← Back",
   "Ano": "Year",
   "Duração": "Duration",
+  "4 semanas": "4 weeks",
   "Atualização - 3 meses": "Update - 3 months",
   "Função": "Role",
   "Ferramentas": "Tools",
