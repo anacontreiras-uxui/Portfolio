@@ -401,6 +401,7 @@
  .case-mobile-tag-row { display: flex; align-items: center; justify-content: center; gap: 8px; max-width: 100%; }
  .case-mobile-tag-row > span { display: flex; align-items: center; justify-content: center; min-width: 0; min-height: 36px; padding: 7px 16px; border-radius: 99px; background: #f5f5f4; color: #57534d; font-size: 14px; font-weight: 500; line-height: 20px; text-align: center; }
  .case-lifecare .case-hero-mobile { gap: 32px; }
+ .case-aima .case-mobile-tags { margin-top: -8px; }
  .case-lifecare .case-mobile-markers { margin-bottom: -8px; }
  .case-lifecare .case-mobile-tags, .case-cupra .case-mobile-tags { gap: 12px; }
  .case-aima .case-mobile-tag-row:last-child > span,
