@@ -276,7 +276,9 @@ function showNotice(title, description) {
   document.querySelector('#notice-description').textContent = description;
   notice.showModal();
 }
-document.querySelector('#cv-button')?.addEventListener('click', () => showNotice('CV em atualização', 'O CV estará disponível em breve. Entretanto, podes contactar-me através de anacontreiras.arch@gmail.com.'));
+document.querySelector('#cv-button')?.addEventListener('click', () => {
+  window.open('./assets/cv/ana-contreiras-cv.pdf', '_blank', 'noopener,noreferrer');
+});
 notice.addEventListener('click', event => {
   const rect = notice.getBoundingClientRect();
   if (event.target === notice && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) notice.close();
