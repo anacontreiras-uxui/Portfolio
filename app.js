@@ -3,7 +3,7 @@ const mobileNav = document.querySelector('#mobile-nav');
 const languageToggle = document.querySelector('#language-toggle');
 const languagePanel = document.querySelector('#language-panel');
 const mobile = window.matchMedia('(max-width: 700px)');
-document.querySelectorAll('.contact .button').forEach(button => {
+document.querySelectorAll('.inner-page .contact .button').forEach(button => {
   const desktopHref = button.getAttribute('href');
   const syncContactDestination = () => {
     button.setAttribute('href', mobile.matches ? 'mailto:anacontreiras.arch@gmail.com' : desktopHref);

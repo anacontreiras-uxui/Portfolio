@@ -409,6 +409,8 @@
  .case-prime .case-mobile-tag-row:last-child > span { max-width: 130px; height: 36px; padding-block: 0; line-height: 15px; }
  .case-mobile-banner { display: block; width: min(390px, calc(100vw - 32px)); justify-self: center; overflow: hidden; border-radius: 23px; }
  .case-lifecare .case-mobile-banner { border-radius: 15px; }
+ :is(.case-lifecare, .case-aima) .case-hero .case-mobile-intro h1 { margin-bottom: 16px; }
+ :is(.case-lifecare, .case-aima) .case-hero.case-container { row-gap: 32px; }
  .case-aima .case-mobile-banner :is([data-figma-node="377:3663"], [data-figma-node="377:3664"]) { box-shadow: none !important; }
  .lifecare-ribbon { height: 40px; font-size: 24px; line-height: 30px; }
  .lifecare-ribbon-group img { width: 16px; height: 16px; }
