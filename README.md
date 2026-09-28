@@ -26,7 +26,7 @@ Para testar no telemóvel, ligar ambos os dispositivos à mesma rede Wi-Fi e abr
 
 - Layout desktop e carrossel mobile com scroll, botões e teclado.
 - Header com seleção e hover em `#416252`; Contacto usa fundo verde.
-- Menu mobile, seleção informativa de idioma e navegação entre páginas.
+- Menu mobile, seleção português/inglês e navegação entre páginas. Idioma guardado no browser e mantido entre páginas.
 - Sobre mim com fotografia, valores, competências, ferramentas e percurso.
 - Carrossel de competências no mobile, reutilizando comportamento dos projetos.
 - Contacto com email, localização e disponibilidade.
@@ -34,6 +34,8 @@ Para testar no telemóvel, ligar ambos os dispositivos à mesma rede Wi-Fi e abr
 - Contacto por email, estados de foco, redução de movimento e ligação para saltar navegação.
 - Cartões inteiros e setas abrem páginas locais: `lifecare.html`, `cupra-raval.html`, `aima.html` e `prime-video.html`.
 - Estudos de caso com conteúdo Figma, etapas navegáveis por clique/teclado e comparação antes/depois da Lifecare.
+
+Traduções em `translations.js`, aplicadas por `i18n.js`. Ao alterar textos portugueses, atualizar a entrada correspondente no dicionário. Textos dentro de imagens e vídeos dos protótipos mantêm o idioma original.
 
 Os grafismos dos cartões mantêm coordenadas próprias do Figma dentro de pequenos artboards escaláveis. O resto da página usa fluxo normal, Flexbox e Grid. `data-figma-node` identifica as camadas dos grafismos para comparação com a origem. O lettering CUPRA desktop foi exportado como SVG para preservar a fonte original. O título CUPRA mobile foi ajustado de 24 para 20 px para caber na caixa original sem sobrepor o subtítulo. A barra de estado do iPhone é parte do mockup, não da página web.
 

@@ -3,6 +3,14 @@ const mobileNav = document.querySelector('#mobile-nav');
 const languageToggle = document.querySelector('#language-toggle');
 const languagePanel = document.querySelector('#language-panel');
 const mobile = window.matchMedia('(max-width: 700px)');
+document.querySelectorAll('.contact .button').forEach(button => {
+  const desktopHref = button.getAttribute('href');
+  const syncContactDestination = () => {
+    button.setAttribute('href', mobile.matches ? 'mailto:anacontreiras.arch@gmail.com' : desktopHref);
+  };
+  mobile.addEventListener('change', syncContactDestination);
+  syncContactDestination();
+});
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 // Keep the current desktop layout as the floor, then scale it with wider viewports.
@@ -161,6 +169,105 @@ const ruleObserver = new ResizeObserver(entries => {
   });
 });
 document.querySelectorAll('[data-rule-width]').forEach(rule => ruleObserver.observe(rule));
+
+const journeyTimeline = document.querySelector('.about-page .timeline');
+if (journeyTimeline) {
+  const points = [...journeyTimeline.querySelectorAll(':scope > article')];
+  const line = document.createElement('span');
+  line.className = 'timeline-reading-line';
+  line.setAttribute('aria-hidden', 'true');
+  const dot = document.createElement('span');
+  dot.className = 'timeline-reading-dot';
+  dot.setAttribute('aria-hidden', 'true');
+  journeyTimeline.append(line, dot);
+  let journeyFrame;
+  let readingPosition;
+  let lastJourneyTime;
+  let pausedPoint = null;
+  let lastPausedPoint = null;
+  let pauseUntil = 0;
+  const updateJourney = () => {
+    journeyFrame = undefined;
+    if (!mobile.matches || !points.length) return;
+    const positions = points.map(point => point.offsetTop + 11);
+    const first = positions[0];
+    const lastPoint = points[points.length - 1];
+    const end = lastPoint.offsetTop + lastPoint.offsetHeight;
+    const readingTarget = Math.max(first, Math.min(end, innerHeight * .38 - journeyTimeline.getBoundingClientRect().top));
+    const now = performance.now();
+    const elapsed = Math.min(48, Math.max(8, now - (lastJourneyTime ?? now - 16)));
+    lastJourneyTime = now;
+    readingPosition ??= first;
+    if (pausedPoint !== null && now >= pauseUntil) pausedPoint = null;
+    if (lastPausedPoint !== null && Math.abs(readingPosition - positions[lastPausedPoint]) > 60) lastPausedPoint = null;
+    if (reducedMotion.matches) {
+      readingPosition = readingTarget;
+      pausedPoint = null;
+    } else if (pausedPoint === null) {
+      const previous = readingPosition;
+      const distance = readingTarget - previous;
+      const step = Math.min(Math.abs(distance) * (1 - Math.exp(-elapsed / 550)), elapsed * .12);
+      readingPosition = previous + Math.sign(distance) * step;
+      const arrivals = positions.map((position, index) => ({ position, index })).filter(({ position, index }) => index > 0 && index !== lastPausedPoint && (
+        (previous < position && readingPosition >= position) ||
+        (previous > position && readingPosition <= position) ||
+        (Math.abs(previous - position) > 1 && Math.abs(readingPosition - position) <= 1)));
+      if (arrivals.length) {
+        arrivals.sort((a, b) => Math.abs(a.position - previous) - Math.abs(b.position - previous));
+        pausedPoint = arrivals[0].index;
+        lastPausedPoint = pausedPoint;
+        readingPosition = positions[pausedPoint];
+        pauseUntil = now + 600;
+      }
+      if (Math.abs(readingTarget - readingPosition) < .2 && pausedPoint === null) readingPosition = readingTarget;
+    }
+    journeyTimeline.style.setProperty('--timeline-line-height', `${end - first}px`);
+    journeyTimeline.style.setProperty('--timeline-reading-position', `${readingPosition}px`);
+    const nearest = positions.reduce((best, position, index) =>
+      Math.abs(position - readingPosition) < Math.abs(positions[best] - readingPosition) ? index : best, 0);
+    const atPoint = Math.abs(positions[nearest] - readingPosition) <= 20;
+    dot.classList.toggle('is-at-point', atPoint);
+    points.forEach((point, index) => point.classList.toggle('timeline-point-active', atPoint && index === nearest));
+    if (!reducedMotion.matches && (pausedPoint !== null || Math.abs(readingTarget - readingPosition) > .2)) scheduleJourney();
+  };
+  const scheduleJourney = () => {
+    if (journeyFrame === undefined) journeyFrame = requestAnimationFrame(updateJourney);
+  };
+  window.addEventListener('scroll', scheduleJourney, { passive: true });
+  window.addEventListener('resize', scheduleJourney, { passive: true });
+  new ResizeObserver(scheduleJourney).observe(journeyTimeline);
+  scheduleJourney();
+}
+
+const toolIcons = document.querySelectorAll('.tool-logo');
+if (toolIcons.length) {
+  const desktopHover = window.matchMedia('(min-width: 701px) and (hover: hover) and (pointer: fine)');
+  const tooltip = document.createElement('div');
+  tooltip.className = 'tool-tooltip';
+  tooltip.hidden = true;
+  tooltip.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(tooltip);
+  const hideTooltip = () => { tooltip.hidden = true; };
+  const moveTooltip = event => {
+    if (tooltip.hidden) return;
+    tooltip.style.left = `${Math.max(8, Math.min(event.clientX + 12, innerWidth - tooltip.offsetWidth - 8))}px`;
+    tooltip.style.top = `${Math.max(8, Math.min(event.clientY + 18, innerHeight - tooltip.offsetHeight - 8))}px`;
+  };
+  toolIcons.forEach(icon => {
+    icon.addEventListener('pointerenter', event => {
+      if (!desktopHover.matches) return;
+      const image = [...icon.querySelectorAll('img')].find(img => img.offsetWidth);
+      tooltip.textContent = image?.alt || '';
+      tooltip.hidden = !tooltip.textContent;
+      moveTooltip(event);
+    });
+    icon.addEventListener('pointermove', moveTooltip);
+    icon.addEventListener('pointerleave', hideTooltip);
+  });
+  window.addEventListener('scroll', hideTooltip, { passive: true, capture: true });
+  window.addEventListener('blur', hideTooltip);
+  desktopHover.addEventListener('change', hideTooltip);
+}
 
 // Replace pending destinations when Ana supplies the final public links.
 const notice = document.querySelector('#notice');
