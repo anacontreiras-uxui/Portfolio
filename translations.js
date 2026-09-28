@@ -89,7 +89,7 @@ window.portfolioTranslations = {
   "← Voltar": "← Back",
   "Ano": "Year",
   "Duração": "Duration",
-  "4 semanas": "4 weeks",
+  "Atualização - 3 meses": "Update - 3 months",
   "Função": "Role",
   "Ferramentas": "Tools",
   "UX Research, Service Design, Wireframing, UI Design, Prototyping, Teste de Usabilidade": "UX Research, Service Design, Wireframing, UI Design, Prototyping, Usability Testing",
