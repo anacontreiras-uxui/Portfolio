@@ -147,6 +147,7 @@
 @media (prefers-reduced-motion: reduce) {
   .case-lifecare .case-back-top { animation: none; }
 }
+.mobile-comparison-laptop { display: none; }
 .case-evolution { padding-bottom: 80px; }
 .case-evolution > .case-heading { margin-bottom: 32px; }
 .case-evolution > .case-heading h2 { font: 700 32px/38px Inter,sans-serif; color: #292524; }
@@ -669,5 +670,281 @@
  .case-lifecare .case-evolution-copy.after { grid-row: 3; }
  .case-lifecare #comparison-1 :is([data-figma-node="432:5540"], [data-figma-node="432:5534"]) { transform: scale(1.25); transform-origin: center; }
  .case-lifecare .case-compare-label { font-size: 16px; line-height: 22px; padding: 8px 14px; }
- .case-lifecare .case-compare-hint { width: min(360px, 80%); font-size: 16px; line-height: 22px; padding: 14px 16px; }
+.case-lifecare .case-compare-hint { width: min(360px, 80%); font-size: 16px; line-height: 22px; padding: 14px 16px; }
+}
+
+/* Lifecare redesign: desktop copy and artwork leave mobile unchanged. */
+.case-lifecare .lifecare-desktop-only { display: none; }
+@media (min-width: 701px) {
+ .case-lifecare .lifecare-desktop-only { display: inline; }
+ .case-lifecare .lifecare-mobile-only { display: none; }
+ .case-lifecare .case-hero { padding-top: 24px; }
+ .case-lifecare .case-hero h1 { font: 400 48px/60px 'Playfair Display', serif; margin-bottom: 9px; }
+ .case-lifecare .case-description { font-size: 18px; line-height: 26px; }
+ .case-lifecare .case-badge { font-size: 16px; line-height: 24px; padding: 7px 24px; }
+ .case-lifecare .case-hero dl { grid-template-columns: 171fr 314fr; gap: 32px 40px; }
+ .case-lifecare .case-hero dt { font-size: 16px; line-height: 24px; margin-bottom: 4px; }
+ .case-lifecare .case-hero dd { font-size: 16px; line-height: 20px; font-weight: 500; }
+ .case-lifecare .case-hero dl > div:first-child dd { font-weight: 400; line-height: 16px; }
+ .case-lifecare .case-hero dl > div:last-child dd { line-height: 24px; }
+ .case-lifecare .lifecare-hero-image { display: block; width: 100%; height: auto; aspect-ratio: 648 / 405; border-radius: 37.141px; box-shadow: 0 3.23px 11.304px #0000004d; }
+ .case-lifecare .case-overview article { height: 290px; display: flex; flex-direction: column; justify-content: center; border: 0; box-shadow: 0 1px 3px #0000001a; }
+ .case-lifecare .case-overview-icon { flex-shrink: 0; background: #f8f8f8; }
+ .case-lifecare .case-overview .case-green .case-overview-icon { background: #ffffff26; box-shadow: none; }
+ .case-lifecare .case-overview h2 { margin: 19px 0; line-height: 32px; }
+ .case-lifecare .case-overview p { margin: 0; font-size: 16px; line-height: 26px; }
+ .case-lifecare .case-overview .case-green p { font-size: 18px; line-height: 27px; color: #f8f8f8; }
+ .case-lifecare .case-research { padding: 34px 0 64px; }
+ .case-lifecare .case-research .case-heading { margin-bottom: 42px; }
+ .case-lifecare .case-research .case-heading h2 { font-size: 32px; line-height: 38px; }
+ .case-lifecare .case-research-grid { width: 100%; margin: 0 0 42px; grid-template-columns: minmax(0, 366fr) minmax(0, 815fr); gap: 64px; }
+ .case-lifecare .research-redesign-wrapper { height: 419px; aspect-ratio: auto !important; }
+ .case-lifecare .research-redesign-art { display: block; position: relative; height: 419px; overflow: hidden; border-radius: 35px; }
+ .case-lifecare .research-redesign-art img { position: absolute; left: -128px; top: -24px; width: 589px; height: 471px; max-width: none; object-fit: cover; }
+ .case-lifecare .case-methods { gap: 20px; }
+ .case-lifecare .case-methods article { min-height: 150px; padding: 20px 24px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 1px 3px #0000001a; }
+ .case-lifecare .case-methods h3 { font-size: 18px; line-height: 24px; margin-bottom: 8px; }
+ .case-lifecare .case-methods p { margin: 0; font-size: 16px; line-height: 24px; }
+ .case-lifecare .case-research > .case-container > h3 { font-size: 24px; line-height: 28px; margin-bottom: 8px; }
+ .case-lifecare .case-research > .case-container > h3 + p { margin: 0; font-size: 16px; line-height: 16px; }
+ .case-lifecare .case-profiles { gap: 24px; margin-top: 24px; }
+ .case-lifecare .case-profiles article { min-height: 111px; display: flex; flex-direction: column; justify-content: center; padding: 16px 24px; border: 1px solid #f8f8f8; border-radius: 16px; background: #fefefee6; }
+ .case-lifecare .case-profiles h3 { margin-bottom: 16px; color: #416252; font-size: 20px; line-height: 24px; font-weight: 600; }
+ .case-lifecare .case-profiles p { margin: 0; color: #5a6a66; font-size: 16px; line-height: 20px; }
+ .case-lifecare .case-insights .case-heading { margin-bottom: 80px; }
+ .case-lifecare .case-insights .case-kicker { font-size: 18px; line-height: 18px; }
+ .case-lifecare .case-insight-track { gap: 24px; padding: 0; }
+ .case-lifecare .case-insight-track { justify-content: safe center; }
+ .case-lifecare .insights-carousel:has(.insights-prev:disabled):has(.insights-next:disabled) .insights-arrow { display: none; }
+ .case-lifecare .case-insight-track article { position: relative; flex-basis: 385px; height: 300px; min-height: 300px; padding: 23px; }
+ .case-lifecare .case-insight-track article .case-kicker { margin: 0; font-size: 14px; line-height: 20px; }
+ .case-lifecare .case-insight-track h3 { position: absolute; top: 110px; left: 23px; width: calc(100% - 64px); margin: 0; font-size: 22px; line-height: 28px; }
+ .case-lifecare .case-insight-track p:last-child { position: absolute; top: 178px; left: 23px; width: calc(100% - 64px); margin: 0; font-size: 16px; line-height: 24px; }
+ .case-lifecare .case-architecture .case-heading { margin-bottom: 64px; }
+ .case-lifecare .case-architecture-list { grid-template-columns: repeat(3, minmax(0, 380px)); justify-content: center; gap: 24px; }
+ .case-lifecare .case-architecture-list article { min-height: 120px; padding: 16px 24px; border: 1px solid #5d93a74d; border-radius: 16px; background: #5d93a71a; }
+ .case-lifecare .case-architecture-list .architecture-dot { display: none; }
+ .case-lifecare .case-architecture-list h3 { color: #5d93a7; font-size: 18px; line-height: 24px; margin-bottom: 8px; }
+ .case-lifecare .case-architecture-list p { color: #5c5c5c; font-size: 17px; line-height: 24px; }
+ .case-lifecare .case-evolution-tabs[data-switcher] { height: 56px; border-radius: 28px; background: #ecf1f0; margin-bottom: 28px; }
+ .case-lifecare .case-evolution-tabs[data-switcher] button { min-height: 48px; border-radius: 24px; font-size: 18px; line-height: 24px; }
+ .case-lifecare .case-compare-grid > article { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 20px clamp(32px, 4.57vw, 64px); grid-template-rows: auto auto auto; align-content: start; }
+ .case-lifecare .case-compare-grid > article > p:first-of-type { font-size: 16px; line-height: 24px; color: #5c5757; }
+ .case-lifecare .case-compare { border-radius: 16px; }
+ .case-lifecare .case-evolution-copy { padding: 16px; }
+ .case-lifecare .case-evolution-copy.before { min-height: 157px; }
+ .case-lifecare .case-compare-grid > article:nth-child(2) .case-evolution-copy.before { min-height: 133px; }
+ .case-lifecare .case-evolution-copy.after { min-height: 170px; }
+ .case-lifecare .case-evolution-copy .case-state { font-size: 14px; line-height: 20px; margin-bottom: 19px; }
+ .case-lifecare .case-evolution-copy p { font-size: 16px; line-height: 24px; }
+ .case-lifecare .case-compare-label { font-size: 14px; line-height: 20px; padding: 6px 10px; }
+ .case-lifecare .case-compare-hint { width: min(317px, 80%); min-height: 40px; padding: 10px 12px; bottom: 13px; font-size: 14px; line-height: 20px; }
+ .case-lifecare #comparison-0 :is([data-figma-node="586:9848"], [data-figma-node="432:5496"]) { width: 157px !important; height: 325px !important; left: 199px !important; top: 67px !important; }
+ .case-lifecare #comparison-0 :is([data-figma-node="586:9848"], [data-figma-node="432:5496"]) { transform: scale(1.12); transform-origin: center; }
+ .case-lifecare #comparison-1 :is([data-figma-node="432:5540"], [data-figma-node="432:5534"]) { transform: scale(1.35); transform-origin: center; }
+ .case-lifecare #comparison-1 :is([data-figma-node="432:5540"], [data-figma-node="432:5534"]) { width: 319px !important; height: 207px !important; }
+ .case-lifecare .case-solution { padding-block: 48px; }
+ .case-lifecare .case-solution > .case-heading { margin-bottom: 48px; }
+ .case-lifecare .case-solution > .case-heading h2 { display: block; color: #292524; font-size: 32px; line-height: 38px; font-weight: 700; }
+ .case-lifecare .case-hotspots { max-width: 1258px; grid-template-columns: minmax(0, 366fr) minmax(0, 852fr); align-items: start; }
+ .case-lifecare .case-hotspots h3 { color: #5d93a7; font-size: 32px; line-height: 39px; margin-bottom: 24px; }
+ .case-lifecare .case-hotspots .hotspot-intro { font-size: 16px; line-height: 19px; min-height: 38px; margin-bottom: 24px; }
+ .case-lifecare .hotspot-stage, .case-lifecare .hotspot-stage.has-feature-popup { min-height: 615px; height: 615px; }
+ .case-lifecare .mobile-device-card { width: min(100%, 345px); height: 615px; padding: 57px 51px; }
+ .case-lifecare .case-hotspots article:first-child .case-art { max-width: 240.84px; }
+ .case-lifecare .desktop-device-card { width: min(100%, 852px); height: 615px; padding: 40px 19px; }
+ .case-lifecare .desktop-device-card .case-art { max-width: 814px; }
+ .case-lifecare .mobile-stage .lifecare-hotspot { width: calc(38px * 223 / 240.84); height: calc(38px * 223 / 240.84); }
+ .case-lifecare .mobile-stage .lifecare-hotspot-label { font-size: calc(28px * 223 / 240.84); }
+ .case-lifecare .mobile-stage .lifecare-hotspot:nth-of-type(1) { left: calc(141px * 223 / 240.84) !important; top: calc(88.63px * 223 / 240.84) !important; }
+ .case-lifecare .mobile-stage .lifecare-hotspot:nth-of-type(2) { left: calc(-11px * 223 / 240.84) !important; top: calc(189.63px * 223 / 240.84) !important; }
+ .case-lifecare .mobile-stage .lifecare-hotspot:nth-of-type(3) { left: calc(194px * 223 / 240.84) !important; top: calc(223.63px * 223 / 240.84) !important; }
+ .case-lifecare .mobile-stage .lifecare-hotspot:nth-of-type(4) { left: calc(84px * 223 / 240.84) !important; top: calc(265.63px * 223 / 240.84) !important; }
+ .case-lifecare .mobile-stage .lifecare-hotspot:nth-of-type(5) { left: calc(191px * 223 / 240.84) !important; top: calc(370.63px * 223 / 240.84) !important; }
+ .case-lifecare .mobile-stage .lifecare-hotspot:nth-of-type(6) { left: calc(129px * 223 / 240.84) !important; top: calc(449.63px * 223 / 240.84) !important; }
+ .case-lifecare .desktop-stage .lifecare-hotspot { width: calc(38px * 692 / 814); height: calc(38px * 692 / 814); }
+ .case-lifecare .desktop-stage .lifecare-hotspot-label { font-size: calc(28px * 692 / 814); }
+ .case-lifecare .desktop-stage [data-hotspot-title="Registo de pacientes"] { left: 7.25% !important; top: 27.65% !important; }
+ .case-lifecare .desktop-stage [data-hotspot-title="Avaliação e monitorização"] { left: 35.38% !important; top: 18.77% !important; }
+ .case-lifecare .desktop-stage [data-hotspot-title="Questionários personalizados"] { left: 50.98% !important; top: 28.41% !important; }
+ .case-lifecare .desktop-stage [data-hotspot-title="Gestão de pacientes"] { left: 18.8% !important; top: 40.32% !important; }
+ .case-lifecare .case-download-app { width: min(326px, 100%); min-height: 50px; font-size: 16px; line-height: 24px; margin-top: 24px; }
+ .case-lifecare .case-impact .case-heading { margin-bottom: 48px; }
+ .case-lifecare .case-impact .case-heading > p:not(.case-kicker) { font-size: 16px; line-height: 25px; }
+ .case-lifecare .case-impact-grid > article { min-height: 510px; padding: 32px; border-radius: 20px; }
+ .case-lifecare .case-impact-grid > .case-green { background: #416252e6; }
+ .case-lifecare .case-impact-grid > .case-green .case-kicker { color: #91b5c3; font-size: 18px; line-height: 18px; }
+ .case-lifecare .case-impact-grid ol { margin-top: 80px; padding-left: 40px; }
+ .case-lifecare .case-impact-grid .case-green li { margin-bottom: 40px; padding-left: 10px; }
+ .case-lifecare .case-impact-grid li::marker { color: #91b5c3; font-size: 16px; }
+ .case-lifecare .case-impact-grid h3 { font-size: 20px; line-height: 24px; font-weight: 600; }
+ .case-lifecare .case-impact-grid > article:last-child > .case-kicker { font-size: 18px; line-height: 18px; margin-top: 0; }
+ .case-lifecare .case-impact-grid > article:last-child > p:not(.case-kicker) { font-size: 16px; line-height: 20px; margin-top: 12px; }
+ .case-lifecare .case-outcomes { margin-top: 80px; gap: 64px; }
+ .case-lifecare .case-outcomes h3 { color: #2d2d2d; line-height: 22px; }
+ .case-lifecare .case-outcomes p { margin-top: 12px; font-size: 16px; line-height: 20px; }
+ .case-lifecare .case-closing blockquote { max-width: 760px; margin-inline: auto; font-size: 32px; line-height: 40px; }
+}
+@media (min-width: 701px) and (max-width: 1000px) {
+ .case-lifecare .case-overview article { height: auto; min-height: 290px; }
+}
+@media (min-width: 701px) {
+ .case-lifecare .lifecare-desktop-feature-dialog { width: min(980px, calc(100vw - 64px), calc((100dvh - 64px) * 816 / 745)); max-width: none; max-height: calc(100dvh - 64px); margin: auto; padding: 0; border: 0; border-radius: 24px; background: #fcfefd; overflow: auto; box-shadow: 0 24px 80px #14292e40; }
+ .case-lifecare .lifecare-desktop-feature-dialog.clinical-popup { width: min(1240px, calc(100vw - 64px)); max-height: min(932px, calc(100dvh - 64px)); }
+ .lifecare-desktop-feature-dialog.clinical-popup .feature-popup-english { padding: 32px; }
+ .lifecare-desktop-feature-dialog.clinical-popup .mobile-feature-body { grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr); align-items: center; }
+ .lifecare-desktop-feature-dialog.clinical-popup .mobile-clinical-laptop { max-width: min(100%, calc((100dvh - 340px) * 266 / 174)); margin: auto; }
+ .lifecare-desktop-feature-dialog::backdrop { background: #14292e66; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+ body:has(.lifecare-desktop-feature-dialog[open]) { overflow: hidden; }
+ .lifecare-desktop-feature-dialog .feature-popup-dismiss { width: 52px; height: 52px; background: #eff6f4; color: #1c3d5a; font: 400 36px/1 Inter,sans-serif; }
+ .lifecare-desktop-feature-dialog .feature-popup-desktop-design .feature-popup-dismiss { top: calc(10.35% - 26px); right: calc(9.14% - 26px); }
+ .lifecare-desktop-feature-dialog .mobile-feature-close { display: grid; place-items: center; width: 52px; height: 52px; flex-shrink: 0; padding: 0; font: 400 36px/1 Inter,sans-serif; }
+ .lifecare-desktop-feature-dialog .feature-popup-english { aspect-ratio: auto; min-height: 0; padding: 40px; }
+ .lifecare-desktop-feature-dialog .mobile-feature-title { font-size: 32px; }
+ .lifecare-desktop-feature-dialog .mobile-feature-description,
+ .lifecare-desktop-feature-dialog .mobile-feature-point p { font-size: 18px; line-height: 27px; }
+ .lifecare-desktop-feature-dialog .mobile-feature-point h4 { font-size: 20px; line-height: 28px; }
+ .lifecare-desktop-feature-dialog.clinical-popup .mobile-feature-description,
+ .lifecare-desktop-feature-dialog.clinical-popup .mobile-feature-point p { font-size: 20px; line-height: 30px; }
+ .lifecare-desktop-feature-dialog.clinical-popup .mobile-feature-point h4 { font-size: 22px; line-height: 30px; }
+ .lifecare-desktop-feature-dialog.clinical-popup .mobile-feature-title { font-size: 40px; }
+ .lifecare-desktop-feature-dialog.clinical-popup .mobile-feature-subtitle { font-size: 20px; line-height: 30px; }
+ .lifecare-desktop-feature-dialog.clinical-popup .mobile-feature-label { font-size: 16px; line-height: 22px; }
+ .lifecare-desktop-feature-dialog .popup-screen-zoom { position: absolute; z-index: 2; pointer-events: none; border: 2px solid #5d93a7; border-radius: 20px; background-color: #fcfefd; background-repeat: no-repeat; box-shadow: 0 12px 40px #14292e40; }
+ .lifecare-desktop-feature-dialog .popup-screen-zoom[hidden] { display: none; }
+ .lifecare-desktop-feature-dialog :is(.feature-popup-dismiss, .mobile-feature-close) { z-index: 3; }
+}
+@media (min-width: 701px) and (max-width: 1000px) {
+ .lifecare-desktop-feature-dialog.clinical-popup .mobile-feature-body { grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); }
+}
+
+.research-phone-viewer[hidden] { display: none; }
+@media (min-width: 701px) and (hover: hover) {
+ .research-phone-trigger { position: absolute; padding: 0; border: 0; border-radius: 18px; background: transparent; cursor: zoom-in; }
+ .research-phone-trigger[data-phone="0"] { left: 18px; top: 12px; width: 120px; height: 316px; z-index: 1; }
+ .research-phone-trigger[data-phone="1"] { left: 128px; top: 106px; width: 112px; height: 309px; z-index: 3; }
+ .research-phone-trigger[data-phone="2"] { left: 229px; top: 59px; width: 120px; height: 302px; z-index: 2; }
+ .research-phone-trigger:focus-visible { outline: 3px solid #f8f8f8; outline-offset: 4px; }
+ .research-phone-viewer { position: fixed; inset: 0; z-index: 10000; display: grid; place-items: center; pointer-events: none; background: #14292e38; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); perspective: 1400px; }
+ .research-phone-model { position: relative; height: min(760px, calc(100dvh - 100px)); aspect-ratio: 1310 / 2708; max-width: calc(100vw - 120px); transform-style: preserve-3d; transform: rotateX(var(--phone-rotate-x, 0deg)) rotateY(var(--phone-rotate-y, 0deg)) translateZ(40px); transition: transform .16s ease-out; animation: research-phone-appear .28s ease-out both; }
+ .research-phone-model::before { content: ''; position: absolute; inset: 2px; border-radius: var(--phone-radius); background: linear-gradient(100deg, #36414a, #121921 35%, #45515b); transform: translateZ(calc(-1 * var(--phone-thickness))); box-shadow: 0 38px 85px #101e2b80; }
+ .research-phone-shell { position: absolute; inset: 0; transform-style: preserve-3d; }
+ .research-phone-side { position: absolute; left: 0; top: 0; transform-origin: 0 0; background: linear-gradient(to bottom, #45515b, #aab3b9 12%, #59636b 23%, #222a30 70%, #7a858d 92%, #d1d6da); }
+ .research-phone-model::after { content: ''; position: absolute; inset: 2%; border-radius: var(--phone-radius); background: linear-gradient(115deg, #ffffff18, transparent 36%, transparent 75%, #c9e8ff0d); transform: translateZ(2px); pointer-events: none; }
+ .research-phone-model img { display: block; width: 100%; height: 100%; object-fit: contain; transform: translateZ(1px); }
+ @keyframes research-phone-appear { from { opacity: 0; scale: .78; } to { opacity: 1; scale: 1; } }
+}
+@media (prefers-reduced-motion: reduce) {
+ .research-phone-model { transition: none; animation: none; }
+}
+
+/* Lifecare mobile refresh; desktop presentation and interactions stay intact. */
+@media (max-width: 700px) {
+ .case-lifecare .lifecare-mobile-only { display: none; }
+ .case-lifecare .lifecare-desktop-only { display: inline; }
+ .case-lifecare .case-hero-mobile { gap: 24px; }
+ .case-lifecare .case-mobile-kind { flex: 0 1 116px; text-align: left; }
+ .case-lifecare .case-mobile-tags { width: min(385px, calc(100vw - 8px)); }
+ .case-lifecare .case-mobile-tag-row { gap: 6px; }
+ .case-lifecare .case-hero.case-container { width: calc(100% - 44px); padding-top: 32px; padding-bottom: 64px; }
+ .case-lifecare .case-mobile-intro { max-width: 349px; }
+ .case-lifecare .case-mobile-intro .case-description { font-size: 16px; line-height: 26px; }
+ .case-lifecare .case-mobile-tag-row > span { padding: 7px 12px; background: #5d93a7; color: #fff; font-size: 14px; white-space: nowrap; }
+ .case-lifecare .case-mobile-banner { width: min(349px, calc(100vw - 44px)); aspect-ratio: 349 / 218 !important; margin-top: 24px; border-radius: 15px; }
+ .case-lifecare .case-mobile-banner .case-canvas { display: none; }
+ .case-lifecare .lifecare-mobile-banner-image { display: block; width: 100%; height: 100%; object-fit: cover; }
+ .case-lifecare .case-mobile-intro .case-description { width: 100%; max-width: none; }
+ .case-lifecare .case-overview.case-container { width: min(321px, calc(100% - 64px)); }
+ .case-lifecare .case-overview-track > article { width: 320px; height: 330px; padding: 32px; }
+ .case-lifecare .case-overview .overview-arrow { width: 44px; height: 44px; }
+ .case-lifecare .case-overview .overview-prev { left: -26px; }
+ .case-lifecare .case-overview .overview-next { right: -26px; }
+ .case-lifecare .case-research { padding: 32px 0 48px; }
+ .case-lifecare .case-research > .case-container { width: calc(100% - 64px); }
+ .case-lifecare .case-research .case-heading h2 { max-width: 322px; margin-inline: auto; font-size: 28px; line-height: 36px; }
+ .case-lifecare .case-research-grid { gap: 32px; }
+ .case-lifecare .research-redesign-wrapper { width: min(322px, 100%); height: 359px; margin-inline: auto; aspect-ratio: auto !important; overflow: hidden; }
+ .case-lifecare .research-redesign-art.lifecare-desktop-only { display: block; width: min(322px, 100%); height: 359px; position: relative; overflow: hidden; }
+ .case-lifecare .research-redesign-art img { position: absolute; left: -107px; top: -23px; width: 513px; height: 410px; max-width: none; object-fit: cover; }
+ .case-lifecare .research-phone-trigger { display: none; }
+ .case-lifecare .research-redesign-wrapper > .case-canvas { display: none; }
+ .case-lifecare .case-methods { gap: 24px; }
+ .case-lifecare .case-methods article { width: min(325px, 100%); min-height: 0; margin-inline: auto; padding: 24px; border: 1px solid #fafaf9; border-radius: 16px; background: #fff; box-shadow: 0 1px 3px #0000001a; }
+ .case-lifecare .case-methods h3 { font-size: 16px; line-height: 24px; font-weight: 500; margin-bottom: 8px; }
+ .case-lifecare .case-methods p { font-size: 16px; line-height: 23px; }
+ .case-lifecare .case-research > .case-container > h3 { font-size: 24px; line-height: 30px; }
+ .case-lifecare .case-research > .case-container > h3 + p { font-size: 16px; line-height: 22px; }
+ .case-lifecare .case-profiles { gap: 24px; margin-top: 40px; }
+ .case-lifecare .case-profiles article { min-height: 138px; padding: 20px 24px; border: 1px solid #fafaf9; border-radius: 16px; background: #fff; box-shadow: 0 1px 3px #0000001a; }
+ .case-lifecare .case-profiles h3 { padding: 0; color: #416252; font-size: 20px; line-height: 24px; }
+ .case-lifecare .case-profiles h3::before { display: none; }
+ .case-lifecare .case-profiles p { color: #5a6a66; font-size: 16px; line-height: 20px; }
+ .case-lifecare .case-insights { padding-block: 48px; }
+ .case-lifecare .case-insights .case-heading h2 { font-size: 24px; line-height: 32px; }
+ .case-lifecare .case-insights .case-heading .case-kicker { display: none; }
+ .case-lifecare .case-insights .insights-carousel { width: 100%; }
+ .case-lifecare .case-insight-track { gap: 24px; padding-inline: 40px; scroll-padding-inline: 40px; }
+ .case-lifecare .case-insight-track article { flex: 0 0 280px; width: 280px; height: 210px; min-height: 210px; padding: 20px 24px; align-items: flex-start; justify-content: center; text-align: left; border-radius: 16px; }
+ .case-lifecare .case-insight-track article.lifecare-mobile-only { display: none; }
+ .case-lifecare .case-insight-track h3 { width: 100%; margin: 12px 0 8px; font-size: 17px; line-height: 23px; text-align: left; }
+ .case-lifecare .case-insight-track p:last-child { width: 100%; margin: 0; font-size: 15px; line-height: 22px; text-align: left; }
+ .case-lifecare .case-architecture .case-heading { margin-bottom: 24px; }
+ .case-lifecare .case-architecture.case-container { width: min(311px, calc(100% - 64px)); }
+ .case-lifecare .case-architecture .case-heading h2 { font-size: 28px; line-height: 34px; }
+ .case-lifecare .case-architecture .case-heading > p { font-size: 16px; line-height: 19px; }
+ .case-lifecare .case-architecture-list { grid-template-columns: 1fr; gap: 24px; }
+ .case-lifecare .case-architecture-list article { min-height: 106px; padding: 16px 24px; gap: 0; border: 1px solid #5d93a74d; border-radius: 16px; background: #5d93a71a; }
+ .case-lifecare .case-architecture-list .architecture-dot { display: none; }
+ .case-lifecare .case-architecture-list h3 { color: #5d93a7; font-size: 18px; line-height: 24px; margin-bottom: 4px; }
+ .case-lifecare .case-architecture-list p { color: #5c5c5c; font-size: 17px; line-height: 24px; }
+ .case-lifecare .case-evolution.case-container { width: 100%; }
+ .case-lifecare .case-evolution > .case-heading h2 { font-size: 28px; line-height: 34px; }
+ .case-lifecare .case-evolution-tabs[data-switcher] { width: min(389px, calc(100% - 4px)); height: 48px; margin: 0 auto 24px; padding: 0; gap: 0; border-radius: 14px; background: #f0f2f2; }
+ .case-lifecare .case-evolution-tabs[data-switcher] button { min-height: 48px; height: 48px; padding: 4px 12px; border-radius: 12px; font-size: 16px; line-height: 20px; color: #333; }
+ .case-lifecare .case-evolution-tabs[data-switcher] button[aria-selected="true"] { background: #63a3b8; color: #fff; }
+ .case-lifecare .case-compare-grid { width: min(380px, calc(100% - 12px)); margin-inline: auto; }
+ .case-lifecare .case-compare-grid > article > p:first-of-type { width: min(368px, 100%); margin: 0 auto 24px; font-size: 16px; line-height: 23px; }
+ .case-lifecare .case-compare { height: 640px; aspect-ratio: auto; background: #ebebeb; }
+ .case-lifecare #comparison-0 > .case-art { background: #ebebeb url('./assets/c71c0.png') center / 255px 522px no-repeat; }
+ .case-lifecare #comparison-0 > .case-compare-before { background: #ebebeb url('./assets/e0117.png') center / 255px 522px no-repeat; }
+ .case-lifecare #comparison-0 .case-canvas { display: none; }
+ .case-lifecare #comparison-1 .case-canvas { display: none; }
+ .case-lifecare #comparison-1 > :is(.case-art, .case-compare-before) { background: #ebebeb; }
+ .case-lifecare #comparison-1 { height: 500px; }
+ .case-lifecare .mobile-comparison-laptop { display: block; position: absolute; top: 50%; left: 50%; width: min(350px, 92%); aspect-ratio: 3220 / 2100; transform: translate(-50%, -50%); }
+ .case-lifecare .mobile-comparison-screen { position: absolute; top: 8%; left: 8.5%; width: 83%; height: 84%; object-fit: cover; }
+ .case-lifecare .mobile-comparison-frame { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; }
+ .case-lifecare .case-evolution-copy { height: auto; min-height: 0; padding: 16px; border-radius: 20px; }
+ .case-lifecare .case-evolution-copy p { font-size: 16px; line-height: 19px; }
+ .case-lifecare .case-solution { padding-inline: 6px; }
+ .case-lifecare .case-solution > .case-heading h2 { font-size: 28px; line-height: 36px; }
+ .case-lifecare .case-hotspots h3 { color: #5d93a7; font-size: 24px; line-height: 29px; margin-bottom: 24px; }
+ .case-lifecare .case-hotspots .hotspot-intro { display: none; }
+ .case-lifecare .mobile-device-card { width: min(380px, 100%); height: 578px; padding: 57px 51px; }
+ .case-lifecare .mobile-stage .case-art { max-width: 223px; }
+ .case-lifecare .desktop-device-card { width: min(380px, 100%); height: 292px; padding: 32px 16px; }
+ .case-lifecare .case-download-app { width: min(310px, 100%); min-height: 50px; }
+ .case-lifecare .case-impact .case-heading > p:not(.case-kicker) { font-size: 16px; line-height: 20px; }
+ .case-lifecare .case-impact-grid > article { min-height: 0; padding: 24px; border-radius: 20px; }
+ .case-lifecare .case-impact-grid .case-green li { margin-bottom: 16px; }
+ .case-lifecare .case-impact-grid .case-green li:last-child { margin-bottom: 0; }
+ .case-lifecare .case-impact-grid .case-green li { font-size: 16px; line-height: 24px; font-weight: 400; }
+ .case-lifecare .case-impact-grid .case-green li::marker { font-size: 12px; }
+ .case-lifecare .case-impact-grid h3 { font-size: 16px; line-height: 24px; font-weight: 500; }
+ .case-lifecare .case-impact-grid .case-green ol { margin-top: 32px; }
+ .case-lifecare .case-impact-grid > .case-green .case-kicker { font-size: 13px; line-height: 18px; color: #fff; }
+ .case-lifecare .case-impact-grid > article:last-child > .case-kicker { font-size: 13px; line-height: 18px; color: #4a6c5e; }
+ .case-lifecare .case-impact-grid > article:last-child > p:not(.case-kicker) { font-size: 14px; line-height: 20px; }
+ .case-lifecare .case-outcomes { margin-top: 32px; gap: 24px; }
+ .case-lifecare .case-outcomes h3 { color: #292929; font-size: 16px; line-height: 24px; font-weight: 500; }
+ .case-lifecare .case-outcomes p { color: #292929; font-size: 14px; line-height: 20px; margin-top: 8px; }
+ .case-lifecare .case-outcomes > .lifecare-mobile-only { display: block; }
+ .case-lifecare .lifecare-mobile-feature-dialog .mobile-feature-label { font-size: 12px; }
+ .case-lifecare .lifecare-mobile-feature-dialog .mobile-feature-title { font-size: 28px; }
+ .case-lifecare .lifecare-mobile-feature-dialog .mobile-feature-description { font-size: 16px; line-height: 22px; }
+ .case-lifecare .lifecare-mobile-feature-dialog .mobile-feature-point-copy h4 { font-size: 15px; line-height: 20px; }
+ .case-lifecare .lifecare-mobile-feature-dialog .mobile-feature-point-copy p { font-size: 13px; line-height: 18px; }
+ .case-lifecare .lifecare-mobile-feature-dialog.clinical-feature-dialog .mobile-feature-title { font-size: 26px; }
+ .case-lifecare .lifecare-mobile-feature-dialog.clinical-feature-dialog .mobile-feature-description { font-size: 15px; line-height: 21px; }
+ .case-lifecare .case-closing blockquote { max-width: min(300px, 100%); }
 }

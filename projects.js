@@ -1,4 +1,130 @@
 // Scale composed Figma illustrations without changing individual SVG dimensions.
+const researchArtwork = document.querySelector('.case-lifecare .research-redesign-art');
+if (researchArtwork) {
+  const desktopHover = window.matchMedia('(min-width: 701px) and (hover: hover)');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const screens = [
+    { title: 'TriaCare', image: './assets/991b9.png', angle: -16 },
+    { title: 'Conteúdos de apoio', image: './assets/309de.png', angle: 12 },
+    { title: 'Questionário semanal', image: './assets/e613f.png', angle: 16 }
+  ];
+  const viewer = document.createElement('div');
+  viewer.className = 'research-phone-viewer';
+  viewer.hidden = true;
+  viewer.setAttribute('aria-hidden', 'true');
+  const model = document.createElement('div');
+  model.className = 'research-phone-model';
+  const screen = document.createElement('img');
+  screen.alt = '';
+  const shell = document.createElement('div');
+  shell.className = 'research-phone-shell';
+  model.append(shell);
+  // Join actual side faces around the rounded perimeter, rather than stacking images.
+  const buildPhoneShell = () => {
+    const width = model.offsetWidth;
+    const height = model.offsetHeight;
+    const inset = 2;
+    const radius = width * .19;
+    const depth = 24;
+    model.style.setProperty('--phone-radius', `${radius}px`);
+    model.style.setProperty('--phone-thickness', `${depth}px`);
+    const points = [];
+    const corners = [
+      [width - inset - radius, inset + radius, -90],
+      [width - inset - radius, height - inset - radius, 0],
+      [inset + radius, height - inset - radius, 90],
+      [inset + radius, inset + radius, 180]
+    ];
+    for (const [cx, cy, start] of corners) {
+      for (let step = 0; step <= 16; step++) {
+        const angle = (start + step * 90 / 16) * Math.PI / 180;
+        points.push([cx + Math.cos(angle) * radius, cy + Math.sin(angle) * radius]);
+      }
+    }
+    const faces = points.map(([x, y], index) => {
+      const next = points[(index + 1) % points.length];
+      const length = Math.hypot(next[0] - x, next[1] - y);
+      const dx = (next[0] - x) / length;
+      const dy = (next[1] - y) / length;
+      const face = document.createElement('span');
+      face.className = 'research-phone-side';
+      face.style.width = `${length + .5}px`;
+      face.style.height = `${depth}px`;
+      face.style.filter = `brightness(${.65 + (dy + 1) * .25})`;
+      face.style.transform = `matrix3d(${dx},${dy},0,0,0,0,1,0,${dy},${-dx},0,0,${x},${y},${-depth},1)`;
+      return face;
+    });
+    shell.replaceChildren(...faces);
+  };
+  model.append(screen);
+  viewer.append(model);
+  document.body.append(viewer);
+  let active = null;
+  const hide = () => {
+    viewer.hidden = true;
+    active?.removeAttribute('data-preview-active');
+    active = null;
+  };
+  screens.forEach((item, index) => {
+    const trigger = document.createElement('button');
+    trigger.type = 'button';
+    trigger.className = 'research-phone-trigger';
+    trigger.dataset.phone = index;
+    trigger.setAttribute('aria-label', `Ampliar ecrã: ${item.title}`);
+    const show = () => {
+      if (!desktopHover.matches) return;
+      active?.removeAttribute('data-preview-active');
+      active = trigger;
+      trigger.dataset.previewActive = '';
+      screen.src = item.image;
+      viewer.style.zoom = String(1 / (parseFloat(getComputedStyle(document.body).zoom) || 1));
+      viewer.style.setProperty('--phone-rotate-x', '3deg');
+      viewer.style.setProperty('--phone-rotate-y', `${item.angle}deg`);
+      viewer.hidden = false;
+      buildPhoneShell();
+    };
+    trigger.addEventListener('pointerenter', show);
+    trigger.addEventListener('focus', show);
+    trigger.addEventListener('pointerleave', hide);
+    trigger.addEventListener('blur', hide);
+    trigger.addEventListener('pointermove', event => {
+      if (active !== trigger || reducedMotion.matches) return;
+      const bounds = trigger.getBoundingClientRect();
+      const x = (event.clientX - bounds.left) / bounds.width - .5;
+      const y = (event.clientY - bounds.top) / bounds.height - .5;
+      viewer.style.setProperty('--phone-rotate-x', `${3 - y * 10}deg`);
+      viewer.style.setProperty('--phone-rotate-y', `${item.angle + x * 18}deg`);
+    });
+    researchArtwork.append(trigger);
+  });
+  const sync = () => {
+    hide();
+    const wrapper = researchArtwork.closest('.research-redesign-wrapper');
+    if (desktopHover.matches) wrapper?.removeAttribute('role');
+    else wrapper?.setAttribute('role', 'img');
+  };
+  desktopHover.addEventListener('change', sync);
+  window.addEventListener('resize', hide, { passive: true });
+  window.addEventListener('scroll', hide, { passive: true });
+  document.addEventListener('keydown', event => { if (event.key === 'Escape') hide(); });
+  sync();
+}
+
+// Native laptop layers keep the mobile comparison legible at larger sizes.
+const mobileClinicalComparison = document.querySelector('.case-lifecare #comparison-1');
+if (mobileClinicalComparison) {
+  [
+    [mobileClinicalComparison.querySelector(':scope > .case-art'), './assets/fc04a.jpg'],
+    [mobileClinicalComparison.querySelector(':scope > .case-compare-before'), './assets/53361.jpg']
+  ].forEach(([layer, source]) => {
+    if (!layer) return;
+    const laptop = document.createElement('div');
+    laptop.className = 'mobile-comparison-laptop';
+    laptop.innerHTML = `<img class="mobile-comparison-screen" src="${source}" alt=""><img class="mobile-comparison-frame" src="./assets/b0d29.png" alt="">`;
+    layer.append(laptop);
+  });
+}
+
 document.querySelectorAll('[data-history-back]').forEach(link => {
   link.addEventListener('click', event => {
     if (window.history.length <= 1) return;
@@ -110,9 +236,67 @@ let activeFeaturePopupTrigger = null;
 let activeFeaturePopupStage = null;
 let activeFeaturePopupArticle = null;
 let activeFeaturePopupAnchorBottom = null;
+let desktopFeatureDialog = null;
+
+function getDesktopFeatureDialog() {
+  if (desktopFeatureDialog) return desktopFeatureDialog;
+  desktopFeatureDialog = document.createElement('dialog');
+  desktopFeatureDialog.className = 'lifecare-desktop-feature-dialog';
+  desktopFeatureDialog.hidden = true;
+  desktopFeatureDialog.addEventListener('cancel', event => {
+    event.preventDefault();
+    closeFeaturePopup();
+  });
+  document.body.append(desktopFeatureDialog);
+  return desktopFeatureDialog;
+}
+
+function addPopupScreenZoom(preview, image, device, wholeImage = false) {
+  const lens = document.createElement('div');
+  lens.className = 'popup-screen-zoom';
+  lens.hidden = true;
+  lens.setAttribute('aria-hidden', 'true');
+  preview.append(lens);
+  const hide = () => {
+    lens.hidden = true;
+    preview.style.cursor = '';
+  };
+  preview.addEventListener('pointermove', event => {
+    if (event.pointerType === 'touch') return;
+    const bounds = preview.getBoundingClientRect();
+    const source = image.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width;
+    const y = (event.clientY - bounds.top) / bounds.height;
+    const inside = wholeImage
+      ? event.clientX >= source.left && event.clientX <= source.right && event.clientY >= source.top && event.clientY <= source.bottom
+      : device === 'mobile'
+        ? x >= .07 && x <= .36 && y >= .29 && y <= .94
+        : x >= .12 && x <= .88 && y >= .32 && y <= .70;
+    if (!inside || !image.complete || !image.naturalWidth) {
+      hide();
+      return;
+    }
+    const size = Math.min(480, bounds.width * .8, bounds.height * .8);
+    const zoom = 2.25;
+    lens.style.width = `${size}px`;
+    lens.style.height = `${size}px`;
+    lens.style.left = `${Math.max(0, Math.min(bounds.width - size, event.clientX - bounds.left - size / 2))}px`;
+    lens.style.top = `${Math.max(0, Math.min(bounds.height - size, event.clientY - bounds.top - size / 2))}px`;
+    lens.style.backgroundImage = `url("${image.src}")`;
+    lens.style.backgroundSize = `${source.width * zoom}px ${source.height * zoom}px`;
+    lens.style.backgroundPosition = `${size / 2 - (event.clientX - source.left) * zoom}px ${size / 2 - (event.clientY - source.top) * zoom}px`;
+    lens.hidden = false;
+    preview.style.cursor = 'zoom-in';
+  });
+  preview.addEventListener('pointerleave', hide);
+}
 
 function alignFeaturePopupToTrigger() {
   if (!activeFeaturePopupPanel) return;
+  if (activeFeaturePopupPanel === desktopFeatureDialog) {
+    desktopFeatureDialog.style.zoom = String(1 / (parseFloat(getComputedStyle(document.body).zoom) || 1));
+    return;
+  }
   activeFeaturePopupAnchorBottom = activeFeaturePopupTrigger?.closest('.lifecare-device-card')?.getBoundingClientRect().bottom ?? null;
   if (activeFeaturePopupAnchorBottom === null) return;
   activeFeaturePopupPanel.style.removeProperty('--popup-y-offset');
@@ -123,6 +307,7 @@ function alignFeaturePopupToTrigger() {
 
 function closeFeaturePopup(restoreFocus = true) {
   if (!activeFeaturePopupPanel) return;
+  if (activeFeaturePopupPanel === desktopFeatureDialog && desktopFeatureDialog.open) desktopFeatureDialog.close();
   activeFeaturePopupPanel.hidden = true;
   activeFeaturePopupPanel.replaceChildren();
   activeFeaturePopupStage?.classList.remove('has-feature-popup');
@@ -145,16 +330,8 @@ function createFeaturePanel(device, title, trigger) {
   const imagePath = featurePopupFiles[device]?.[title];
   if (!imagePath) return;
   closeFeaturePopup(false);
-  const stage = document.querySelector(device === 'mobile' ? '.desktop-stage' : '.mobile-stage');
-  const panel = stage?.querySelector('.hotspot-feature-panel');
-  if (!stage || !panel) return;
-  activeFeaturePopupAnchorBottom = trigger.closest('.lifecare-device-card')?.getBoundingClientRect().bottom ?? null;
-  const article = stage.closest('article');
-  stage.querySelector('.lifecare-device-card')?.setAttribute('hidden', '');
-  article?.classList.add('feature-popup-target');
-  panel.classList.toggle('mobile-popup', device === 'mobile');
-  panel.classList.toggle('desktop-popup', device === 'desktop');
-  panel.setAttribute('role', 'region');
+  const panel = getDesktopFeatureDialog();
+  panel.classList.toggle('clinical-popup', device === 'desktop');
   panel.setAttribute('aria-label', title);
   const preview = document.createElement('div');
   preview.className = `feature-popup-preview ${device === 'mobile' ? 'feature-popup-desktop-design' : 'feature-popup-clinical-design'}`;
@@ -168,24 +345,25 @@ function createFeaturePanel(device, title, trigger) {
   close.setAttribute('aria-label', 'Fechar pop-up');
   close.textContent = '×';
   close.addEventListener('click', closeFeaturePopup);
-  const englishFeature = window.portfolioI18n?.language === 'en'
+  const feature = (device === 'desktop' || window.portfolioI18n?.language === 'en')
     ? mobileFeaturePopups.find(feature => feature.title === title) : null;
-  if (englishFeature) {
+  if (feature) {
     preview.classList.add('feature-popup-english');
-    populateFeatureContent(preview, englishFeature, closeFeaturePopup, 'desktop-feature');
+    populateFeatureContent(preview, feature, closeFeaturePopup, 'desktop-feature');
     panel.setAttribute('aria-labelledby', 'desktop-feature-title');
+    const screen = preview.querySelector('.mobile-feature-screen');
+    if (screen) addPopupScreenZoom(preview, screen, device, true);
   } else {
     preview.append(design, close);
+    addPopupScreenZoom(preview, design, device);
     panel.removeAttribute('aria-labelledby');
   }
   panel.replaceChildren(preview);
   panel.hidden = false;
-  stage?.classList.add('has-feature-popup');
   activeFeaturePopupPanel = panel;
-  activeFeaturePopupStage = stage;
-  activeFeaturePopupArticle = article;
   activeFeaturePopupTrigger = trigger;
   alignFeaturePopupToTrigger();
+  panel.showModal();
   (preview.querySelector('button') || close).focus();
 }
 
@@ -488,7 +666,11 @@ window.addEventListener('portfolio-language-change', () => {
 });
 
 window.addEventListener('resize', () => {
-  if (!activeFeaturePopupPanel || window.matchMedia('(max-width: 700px)').matches) return;
+  if (!activeFeaturePopupPanel) return;
+  if (window.matchMedia('(max-width: 700px)').matches) {
+    closeFeaturePopup(false);
+    return;
+  }
   requestAnimationFrame(() => {
     alignFeaturePopupToTrigger();
   });

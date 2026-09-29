@@ -166,6 +166,8 @@ dialog .button { margin-top: 24px; width: 100%; }
   .brand small { font-size: 15px; line-height: 20px; font-weight: 400; }
   .nav a, .contact-nav { font-size: 18px; line-height: 26px; font-weight: 400; }
   .footer { font-size: 18px; font-weight: 400; }
+  .footer-columns { grid-template-columns: 305px minmax(120px, max-content) 305px; }
+  .footer-nav a { white-space: nowrap; }
   .footer-brand h2 { font-size: 24px; line-height: 32px; font-weight: 400; }
   .footer-brand p, .footer-nav, .copyright { line-height: 27px; }
   .footer h3 { font-size: 20px; line-height: 28px; font-weight: 400; }
