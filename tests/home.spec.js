@@ -95,7 +95,7 @@ for (const width of [393, 700]) {
   });
 }
 
-test('Contact destinations, pending CV and language control work', async ({ page }) => {
+test('Contact destinations, CV and language control work', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('link', { name: 'Entrar em contacto', exact: true })).toHaveAttribute('href', './contacto.html');
   for (const link of await page.locator('.project-card-link').all()) {
@@ -103,11 +103,11 @@ test('Contact destinations, pending CV and language control work', async ({ page
     await expect(link).not.toHaveAttribute('target', '_blank');
   }
   const cv = page.getByRole('button', { name: 'Descarregar CV' });
+  const cvPagePromise = page.waitForEvent('popup');
   await cv.click();
-  await expect(page.getByRole('dialog')).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'CV em atualização' })).toBeVisible();
-  await page.keyboard.press('Escape');
-  await expect(cv).toBeFocused();
+  const cvPage = await cvPagePromise;
+  await expect(cvPage).toHaveURL(/Ana_Contreiras_CV_UXUI_PT\.pdf$/);
+  await cvPage.close();
   await page.getByRole('button', { name: 'Idioma: português' }).click();
   await expect(page.locator('#language-panel')).toBeVisible();
   await page.keyboard.press('Escape');

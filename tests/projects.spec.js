@@ -20,10 +20,12 @@ for (const width of [393, 1400]) {
       const box = await heading.boundingBox();
       await page.mouse.click(box.x + 8, box.y + 8);
       await expect(page).toHaveURL(new RegExp(`/${slug}\\.html$`));
-      await expect(page.getByRole('heading', { level: 1 })).toHaveText(title);
+      await expect(page.locator('h1:visible')).toHaveCount(1);
+      await expect(page.locator('h1:visible')).toHaveText(title);
       await page.reload();
-      await expect(page.getByRole('heading', { level: 1 })).toHaveText(title);
-      await page.getByRole('link', { name: '← Voltar aos projetos' }).click();
+      await expect(page.locator('h1:visible')).toHaveCount(1);
+      await expect(page.locator('h1:visible')).toHaveText(title);
+      await page.getByRole('link', { name: '← Voltar', exact: true }).click();
       await expect(page).toHaveURL(/index\.html#projetos$/);
       await page.locator('.project-card').nth(i).locator('.project-link').click();
       await expect(page).toHaveURL(new RegExp(`/${slug}\\.html$`));
@@ -58,17 +60,17 @@ for (const [slug, title] of projects) {
         await expect(tabs.first()).toBeFocused();
         await expect(tabs.first()).toHaveAttribute('aria-selected', 'true');
       } else {
-        await expect(page.locator('.case-evolution-copy')).toHaveCount(4);
-        const desktopComparisonBox = await page.locator('#comparison-1').boundingBox();
-        const desktopBeforeBox = await page.locator('.case-evolution-copy').nth(2).boundingBox();
-        expect(desktopBeforeBox.y).toBeGreaterThanOrEqual(desktopComparisonBox.y + desktopComparisonBox.height);
-        await expect(page.locator('#comparison-1 > .case-compare-label.after')).toBeVisible();
-        await expect(page.locator('#comparison-1 > .case-compare-hint')).toBeVisible();
+        await expect(page.getByRole('tab', { name: 'Mobile' })).toHaveAttribute('aria-selected', 'true');
+        await expect(page.locator('#comparison-0')).toBeVisible();
         const slider = page.locator('.case-range').first();
         await slider.focus();
         await slider.press('End');
         await expect(slider).toHaveValue('100');
         expect(await page.locator('#comparison-0').evaluate(el => el.style.getPropertyValue('--split'))).toBe('100%');
+        await page.getByRole('tab', { name: 'Desktop' }).click();
+        await expect(page.locator('#comparison-1')).toBeVisible();
+        await expect(page.locator('#comparison-1 > .case-compare-label.after')).toBeVisible();
+        await expect(page.locator('#comparison-1 > .case-compare-hint')).toBeVisible();
       }
     });
   }
@@ -82,42 +84,27 @@ test('Project card links support keyboard navigation', async ({ page }) => {
   await expect(page).toHaveURL(/lifecare\.html$/);
 });
 
-test('Lifecare hotspots open desktop Figma popups beside their screens', async ({ page }) => {
+test('Lifecare hotspots open readable dialogs on desktop and mobile', async ({ page }) => {
   await page.setViewportSize({ width: 1400, height: 950 });
   await page.goto('/lifecare.html');
-
   await page.locator('[data-device="mobile"][data-hotspot-title="Diário"]').click();
-  const mobileFeaturePopup = page.locator('[data-feature-panel="desktop"]');
-  await expect(mobileFeaturePopup).toBeVisible();
-  await expect(mobileFeaturePopup.locator('img')).toHaveAttribute('src', /lifecare-popup-desktop-diary\.png$/);
-  await expect(mobileFeaturePopup.locator('[aria-label="Fechar pop-up"]')).toBeVisible();
-  const mobileScreenBox = await page.locator('.mobile-device-card').boundingBox();
-  const mobilePopupBox = await mobileFeaturePopup.boundingBox();
-  expect(mobilePopupBox.x).toBeGreaterThan(mobileScreenBox.x + mobileScreenBox.width);
-  expect(Math.abs(mobilePopupBox.y + mobilePopupBox.height - (mobileScreenBox.y + mobileScreenBox.height))).toBeLessThanOrEqual(2);
-  await expect(page.locator('.desktop-device-card')).toBeHidden();
-
+  const desktopDialog = page.locator('.lifecare-desktop-feature-dialog');
+  await expect(desktopDialog).toHaveJSProperty('open', true);
+  await expect(desktopDialog.locator('.feature-popup-design')).toHaveAttribute('src', /lifecare-popup-desktop-diary\.png$/);
+  await desktopDialog.locator('.feature-popup-dismiss').click();
+  await expect(desktopDialog).toHaveJSProperty('open', false);
   await page.locator('[data-device="mobile"][data-hotspot-title="TriaCare"]').click();
-  await expect(mobileFeaturePopup.locator('img')).toHaveAttribute('src', /lifecare-popup-desktop-triacare\.png$/);
-  await mobileFeaturePopup.locator('.feature-popup-dismiss').click();
-  await expect(page.locator('.desktop-device-card')).toBeVisible();
-
-  await page.locator('[data-device="desktop"][data-hotspot-title="Questionários personalizados"]').click();
-  const clinicalPopup = page.locator('[data-feature-panel="mobile"]');
-  await expect(clinicalPopup).toBeVisible();
-  await expect(clinicalPopup.locator('img')).toHaveAttribute('src', /lifecare-popup-clinical-questionnaires\.png$/);
-  await expect(page.locator('.mobile-device-card')).toBeHidden();
-  await expect(clinicalPopup.locator('.feature-popup-dismiss')).toBeVisible();
-  const desktopScreenBox = await page.locator('.desktop-device-card').boundingBox();
-  const clinicalPopupBox = await clinicalPopup.boundingBox();
-  expect(clinicalPopupBox.x + clinicalPopupBox.width).toBeLessThan(desktopScreenBox.x);
-  expect(Math.abs(clinicalPopupBox.y + clinicalPopupBox.height - (desktopScreenBox.y + desktopScreenBox.height))).toBeLessThanOrEqual(2);
-  await clinicalPopup.locator('.feature-popup-dismiss').click();
-  await expect(clinicalPopup).toBeHidden();
-
+  await expect(desktopDialog).toHaveJSProperty('open', true);
+  await expect(desktopDialog.locator('.feature-popup-design')).toHaveAttribute('src', /lifecare-popup-desktop-triacare\.png$/);
+  await page.keyboard.press('Escape');
+  await expect(desktopDialog).toHaveJSProperty('open', false);
   await page.setViewportSize({ width: 393, height: 844 });
   await page.goto('/lifecare.html');
   await page.locator('[data-device="mobile"][data-hotspot-title="Diário"]').click();
-  await expect(page.locator('[data-feature-panel="desktop"]')).toBeVisible();
+  const mobileDialog = page.locator('.lifecare-mobile-feature-dialog');
+  await expect(mobileDialog).toHaveJSProperty('open', true);
+  await expect(mobileDialog.getByRole('button', { name: /fechar/i })).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(mobileDialog).toHaveJSProperty('open', false);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });

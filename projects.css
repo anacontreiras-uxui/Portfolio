@@ -399,7 +399,7 @@
  .case-mobile-year { flex-shrink: 0; padding: 4px 10px; border-radius: 99px; background: color-mix(in srgb, var(--case-accent) 10%, transparent); color: var(--case-accent); }
  .case-mobile-role { flex-shrink: 0; white-space: nowrap; }
  .case-mobile-marker-dot { flex: 0 0 6px; height: 6px; border-radius: 50%; background: #7fa99b80; }
- .case-mobile-kind { min-width: 0; }
+ .case-mobile-kind { min-width: 0; overflow-wrap: anywhere; }
  .case-mobile-intro { width: 100%; max-width: 325px; }
  .case-hero .case-mobile-intro h1 { width: 100%; max-width: none; font-size: 40px; line-height: 48px; margin-bottom: 24px; text-align: left; }
  .case-mobile-intro .case-description { font-size: 16px; line-height: 26px; text-align: left; }
