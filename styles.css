@@ -117,6 +117,44 @@ h1 em { font-family: 'Playfair Display', serif; font-weight: 800; color: var(--g
 .home-lifecare-mac-base { position: absolute; left: 0; top: 136px; width: 165px; height: 40px; overflow: hidden; }
 .home-lifecare-mac-base img { position: absolute; left: 0; top: -366.98%; width: 173.26%; height: 529.48%; max-width: none; }
 .home-lifecare-phone { position: absolute; left: 47px; top: 96px; width: 44px; height: 91px; object-fit: contain; }
+.home-project-banner { position: relative; width: 499px; height: 201px; overflow: hidden; border-radius: 23px 23px 0 0; }
+.home-project-banner > img { position: absolute; display: block; max-width: none; }
+.home-cupra-banner { background: #18151d url('./assets/dd55b.png') 0 -71.52px / 499px 333px no-repeat; }
+.home-cupra-title { position: absolute; left: 29px; top: 17px; z-index: 1; color: #fefefe; font: 700 24px/29px 'League Spartan', sans-serif; }
+.home-cupra-subtitle { position: absolute; left: 29px; top: 48px; z-index: 1; color: #c8783a; font: 500 16px/19px 'League Spartan', sans-serif; }
+.home-cupra-screen { object-fit: fill; box-shadow: none; }
+.home-cupra-screen-left { left: 29px; top: 77px; width: 51px; height: 104px; }
+.home-cupra-screen-middle { left: 76px; top: 71px; width: 57px; height: 116px; }
+.home-cupra-screen-right { left: 127px; top: 75px; width: 52px; height: 104px; }
+.home-cupra-mark { left: 268px; top: 0; width: 202px; height: 95px; }
+.home-cupra-car { left: 243px; top: 3.64px; width: 283px; height: 159px; object-fit: contain; }
+.home-prime-banner { background: #071a36 url('./assets/34fac.png') 0 -68px / 498px 332px no-repeat; }
+.home-prime-logo { left: 23px; top: 13px; width: 85px; height: 26px; object-fit: contain; }
+.home-prime-screen { object-fit: contain; box-shadow: none; }
+.home-prime-screen-back { left: 99px; top: 55px; width: 62px; height: 128px; transform: rotate(-2.21deg); }
+.home-prime-screen-front { left: 127px; top: 39px; width: 122px; height: 142px; }
+.home-prime-features { position: absolute; left: 258px; top: 75px; display: grid; gap: 8px; color: #fefefe; font: 500 12px/18px Inter, sans-serif; letter-spacing: -.6px; }
+.home-prime-features span { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.home-prime-features img { display: block; width: 16px; height: 16px; object-fit: contain; }
+.home-prime-features span:nth-child(2) img { height: 17.6px; }
+.home-prime-edit { left: 454px; top: 19px; width: 24px; height: 24px; }
+.art-mobile .home-project-banner { width: 324px; }
+.art-mobile .home-cupra-banner { background-position: 0 -14px; background-size: 324px 216px; }
+.art-mobile .home-cupra-title { left: 13px; top: 17px; font: 500 24px/29px Inter, sans-serif; }
+.art-mobile .home-cupra-subtitle { left: 13px; top: 54px; font-size: 13px; line-height: 16px; }
+.art-mobile .home-cupra-screen-left { left: 12.5px; top: 88px; width: 46px; height: 94px; }
+.art-mobile .home-cupra-screen-middle { left: 54.5px; top: 82px; width: 51px; height: 105px; }
+.art-mobile .home-cupra-screen-right { left: 102.5px; top: 88px; width: 46px; height: 93px; }
+.art-mobile .home-cupra-mark { left: 186px; top: 0; width: 145px; height: 68px; }
+.art-mobile .home-cupra-car { left: 168px; top: 2.27px; width: 203px; height: 114px; }
+.art-mobile .home-prime-banner { background-position: -20px -14px; background-size: 344px 229px; }
+.art-mobile .home-prime-logo { left: 19.5px; top: 16px; width: 109px; height: 34px; }
+.art-mobile .home-prime-screen-back { left: 34px; top: 73px; width: 55px; height: 113px; }
+.art-mobile .home-prime-screen-front { left: 59.5px; top: 60px; width: 107px; height: 125px; }
+.art-mobile .home-prime-features { left: 170px; top: 100px; font-size: 10px; line-height: 14px; letter-spacing: -.5px; }
+.art-mobile .home-prime-features img { width: 14px; height: 14px; }
+.art-mobile .home-prime-features span:nth-child(2) img { width: 12px; height: 13.2px; }
+.art-mobile .home-prime-edit { left: 287.5px; top: 17px; }
 .art p { margin: 0; }
 .art .art-desktop > div, .art .art-mobile > div { overflow: hidden; }
 .project-link { display: flex; align-items: center; justify-content: center; position: absolute; right: 32px; top: 24px; width: 48px; height: 48px; border-radius: 50%; background: #fefefee6; box-shadow: 0 10px 15px #0000001a, 0 4px 6px #0000001a; z-index: 1; transition: transform .15s; }
