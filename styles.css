@@ -117,6 +117,17 @@ h1 em { font-family: 'Playfair Display', serif; font-weight: 800; color: var(--g
 .home-lifecare-mac-base { position: absolute; left: 0; top: 136px; width: 165px; height: 40px; overflow: hidden; }
 .home-lifecare-mac-base img { position: absolute; left: 0; top: -366.98%; width: 173.26%; height: 529.48%; max-width: none; }
 .home-lifecare-phone { position: absolute; left: 47px; top: 96px; width: 44px; height: 91px; object-fit: contain; }
+.home-lifecare-art-mobile { position: relative; width: 324px; height: 201px; overflow: hidden; border-radius: 23px 23px 0 0; background: #91b5c3; }
+.home-lifecare-mobile-shape { position: absolute; width: 119px; height: 119px; border-radius: 15px; background: #5d93a7; transform: rotate(11.55deg); }
+.home-lifecare-mobile-shape-left { left: -27px; top: -25px; }
+.home-lifecare-mobile-shape-right { left: 208px; top: 100px; width: 132px; height: 132px; }
+.home-lifecare-art-mobile .home-lifecare-panel { left: 30px; top: 52px; width: 276px; height: 99px; }
+.home-lifecare-art-mobile .home-lifecare-logo { left: 224px; top: 62px; }
+.home-lifecare-art-mobile .home-lifecare-title { left: 163px; top: 96px; font-size: 16px; line-height: 22px; }
+.home-lifecare-art-mobile .home-lifecare-title strong { font-size: 24px; line-height: 22px; }
+.home-lifecare-art-mobile .home-lifecare-mac-top { left: -22px; top: 31px; width: 238px; height: 105px; }
+.home-lifecare-art-mobile .home-lifecare-mac-base { left: -22px; top: 134px; width: 138px; height: 33px; }
+.home-lifecare-art-mobile .home-lifecare-phone { left: 18px; top: 99px; width: 37px; height: 76px; }
 .home-project-banner { position: relative; width: 499px; height: 201px; overflow: hidden; border-radius: 23px 23px 0 0; }
 .home-project-banner > img { position: absolute; display: block; max-width: none; }
 .home-cupra-banner { background: #18151d url('./assets/dd55b.png') 0 -71.52px / 499px 333px no-repeat; }
