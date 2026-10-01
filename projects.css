@@ -1112,7 +1112,7 @@
   .case-cupra .case-architecture-list { grid-template-columns: repeat(3, minmax(0, 370px)); justify-content: center; gap: 24px; counter-reset: cupra-architecture; }
   .case-cupra .case-architecture-list article { min-height: 117px; padding: 16px 24px; gap: 8px; border: 1px solid #e0e0e0; border-radius: 16px; background: #b77f581a; counter-increment: cupra-architecture; }
   .case-cupra .case-architecture-list h3 { display: flex; align-items: baseline; gap: 8px; color: #333; font-size: 18px; line-height: 24px; }
-  .case-cupra .case-architecture-list h3::before { content: '0' counter(cupra-architecture) ' ·'; color: #c8783a; font-size: 24px; }
+  .case-cupra .case-architecture-list h3::before { content: '0' counter(cupra-architecture) ' ·'; flex: 0 0 auto; white-space: nowrap; color: #c8783a; font-size: 24px; }
   .case-cupra .case-architecture .case-heading > p { line-height: 25px; }
   .case-cupra .case-architecture-list p { color: #5c5c5c; font-size: 17px; line-height: 24px; }
   .case-cupra .case-solution > .case-heading .case-kicker { line-height: 18px; }
