@@ -1,31 +1,46 @@
 // Scale composed Figma illustrations without changing individual SVG dimensions.
-const researchArtwork = document.querySelector('.case-lifecare .research-redesign-art');
-if (researchArtwork) {
+const setupResearchPhonePreview = (researchArtwork, screens, roleHost) => {
+  if (!researchArtwork) return;
   const desktopHover = window.matchMedia('(min-width: 701px) and (hover: hover)');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const screens = [
-    { title: 'TriaCare', image: './assets/991b9.png', angle: -16 },
-    { title: 'Conteúdos de apoio', image: './assets/309de.png', angle: 12 },
-    { title: 'Questionário semanal', image: './assets/e613f.png', angle: 16 }
-  ];
   const viewer = document.createElement('div');
   viewer.className = 'research-phone-viewer';
+  const isCupraResearch = Boolean(researchArtwork.closest('.case-cupra'));
+  const isAimaResearch = Boolean(researchArtwork.closest('.case-aima'));
+  const isPrimeResearch = Boolean(researchArtwork.closest('.case-prime'));
+  if (isCupraResearch) viewer.classList.add('cupra-research-viewer');
+  if (isAimaResearch) viewer.classList.add('aima-research-viewer');
+  if (isPrimeResearch) viewer.classList.add('prime-research-viewer');
   viewer.hidden = true;
   viewer.setAttribute('aria-hidden', 'true');
   const model = document.createElement('div');
   model.className = 'research-phone-model';
   const screen = document.createElement('img');
   screen.alt = '';
+  screen.src = screens[0].image || './assets/b9a7f.png';
+  const front = document.createElement('div');
+  front.className = 'research-phone-front';
   const shell = document.createElement('div');
   shell.className = 'research-phone-shell';
   model.append(shell);
+  const previewVideos = isAimaResearch || isPrimeResearch ? screens.map(item => {
+    if (!item.video) return null;
+    const video = document.createElement('video');
+    video.src = item.video;
+    video.preload = 'auto';
+    video.muted = true;
+    video.playsInline = true;
+    video.setAttribute('aria-hidden', 'true');
+    video.hidden = true;
+    return video;
+  }) : [];
   // Join actual side faces around the rounded perimeter, rather than stacking images.
   const buildPhoneShell = () => {
     const width = model.offsetWidth;
     const height = model.offsetHeight;
     const inset = 2;
-    const radius = width * .19;
-    const depth = 24;
+    const radius = width * (isCupraResearch ? (viewer.dataset.phone === '2' ? .15 : .11) : isAimaResearch || isPrimeResearch ? .14 : .19);
+    const depth = isCupraResearch ? 48 : isAimaResearch || isPrimeResearch ? 36 : 24;
     model.style.setProperty('--phone-radius', `${radius}px`);
     model.style.setProperty('--phone-thickness', `${depth}px`);
     const points = [];
@@ -56,7 +71,13 @@ if (researchArtwork) {
     });
     shell.replaceChildren(...faces);
   };
-  model.append(screen);
+  if (isCupraResearch || isAimaResearch || isPrimeResearch) {
+    front.append(screen);
+    if (isAimaResearch || isPrimeResearch) front.append(...previewVideos.filter(Boolean));
+    model.append(front);
+  } else {
+    model.append(screen);
+  }
   viewer.append(model);
   document.body.append(viewer);
   let active = null;
@@ -76,7 +97,19 @@ if (researchArtwork) {
       active?.removeAttribute('data-preview-active');
       active = trigger;
       trigger.dataset.previewActive = '';
-      screen.src = item.image;
+      if (item.image) screen.src = item.image;
+      viewer.dataset.phone = String(index);
+      model.style.aspectRatio = item.aspect || '1310 / 2708';
+      if (isAimaResearch || isPrimeResearch) {
+        screen.hidden = Boolean(item.video);
+        previewVideos.forEach((video, videoIndex) => { if (video) video.hidden = videoIndex !== index; });
+        const video = previewVideos[index];
+        if (video) {
+          const seek = () => { video.pause(); video.currentTime = item.time; };
+          if (video.readyState >= 1) seek();
+          else video.addEventListener('loadedmetadata', seek, { once: true });
+        }
+      }
       viewer.style.zoom = String(1 / (parseFloat(getComputedStyle(document.body).zoom) || 1));
       viewer.style.setProperty('--phone-rotate-x', '3deg');
       viewer.style.setProperty('--phone-rotate-y', `${item.angle}deg`);
@@ -99,16 +132,43 @@ if (researchArtwork) {
   });
   const sync = () => {
     hide();
-    const wrapper = researchArtwork.closest('.research-redesign-wrapper');
-    if (desktopHover.matches) wrapper?.removeAttribute('role');
-    else wrapper?.setAttribute('role', 'img');
+    if (desktopHover.matches) roleHost?.removeAttribute('role');
+    else roleHost?.setAttribute('role', 'img');
   };
   desktopHover.addEventListener('change', sync);
   window.addEventListener('resize', hide, { passive: true });
   window.addEventListener('scroll', hide, { passive: true });
   document.addEventListener('keydown', event => { if (event.key === 'Escape') hide(); });
   sync();
-}
+};
+
+const lifecareResearchArtwork = document.querySelector('.case-lifecare .research-redesign-art');
+setupResearchPhonePreview(lifecareResearchArtwork, [
+  { title: 'TriaCare', image: './assets/991b9.png', angle: -16 },
+  { title: 'Conteúdos de apoio', image: './assets/309de.png', angle: 12 },
+  { title: 'Questionário semanal', image: './assets/e613f.png', angle: 16 }
+], lifecareResearchArtwork?.closest('.research-redesign-wrapper'));
+
+const cupraResearchArtwork = document.querySelector('.case-cupra .case-research-grid .case-art');
+setupResearchPhonePreview(cupraResearchArtwork, [
+  { title: 'Personalização do CUPRA', image: './assets/cc70f.png', angle: -24 },
+  { title: 'Test-drive CUPRA', image: './assets/f022b.png', angle: -20 },
+  { title: 'Bilhete do test-drive CUPRA', image: './assets/cupra-test-drive-ticket.png', angle: 24 }
+], cupraResearchArtwork);
+
+const aimaResearchArtwork = document.querySelector('.case-aima .case-research-grid .case-art');
+setupResearchPhonePreview(aimaResearchArtwork, [
+  { title: 'Percurso e perguntas', video: './assets/aima-percurso-completo.mp4', time: 16, aspect: '480 / 964', angle: -12 },
+  { title: 'Resultado do percurso', video: './assets/aima-resultado.mp4', time: 2, aspect: '480 / 996', angle: 10 },
+  { title: 'Documentos necessários', video: './assets/aima-resultado.mp4', time: 10, aspect: '480 / 996', angle: 12 }
+], aimaResearchArtwork);
+
+const primeResearchArtwork = document.querySelector('.case-prime .case-research-grid .case-art');
+setupResearchPhonePreview(primeResearchArtwork, [
+  { title: 'Fluxo de subscrição', video: './assets/prime-subscricao.mp4', time: 22, aspect: '240 / 542', angle: -14 },
+  { title: 'Descoberta de conteúdos', video: './assets/prime-subscricao.mp4', time: 29, aspect: '240 / 542', angle: 8 },
+  { title: 'Gestão da subscrição', video: './assets/prime-cancelamento.mp4', time: 19, aspect: '240 / 542', angle: 14 }
+], primeResearchArtwork);
 
 // Native laptop layers keep the mobile comparison legible at larger sizes.
 const mobileClinicalComparison = document.querySelector('.case-lifecare #comparison-1');
@@ -690,6 +750,10 @@ document.querySelectorAll('[data-insights-carousel]').forEach(carousel => {
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const maxScroll = () => Math.max(0, track.scrollWidth - track.clientWidth);
   function updateControls() {
+    if (carousel.closest('.case-aima, .case-prime')) {
+      const needsNavigation = maxScroll() > 2;
+      previous.hidden = next.hidden = !needsNavigation;
+    }
     previous.disabled = track.scrollLeft <= 1;
     next.disabled = track.scrollLeft >= maxScroll() - 1;
   }

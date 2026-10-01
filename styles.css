@@ -104,6 +104,19 @@ h1 em { font-family: 'Playfair Display', serif; font-weight: 800; color: var(--g
 .art { position: relative; height: 201px; overflow: hidden; flex-shrink: 0; }
 .art-desktop, .art-mobile { width: 499px; height: 201px; position: absolute; left: 0; top: 0; transform-origin: top left; }
 .art-mobile { display: none; width: 324px; }
+.home-lifecare-art-desktop { position: relative; width: 499px; height: 201px; overflow: hidden; border-radius: 23px 23px 0 0; background: #91b5c3; }
+.home-lifecare-shape { position: absolute; inset: 0; background: #5d93a7; }
+.home-lifecare-shape-left { clip-path: polygon(0 0, 18% 0, 12% 100%, 0 100%); }
+.home-lifecare-shape-right { clip-path: polygon(84% 0, 100% 0, 100% 100%, 78% 100%); }
+.home-lifecare-panel { position: absolute; left: 57px; top: 46px; width: 371px; height: 123px; border-radius: 15px; background: #fefefe; }
+.home-lifecare-logo { position: absolute; left: 311px; top: 60px; width: 30px; height: 30px; object-fit: contain; }
+.home-lifecare-title { position: absolute; left: 250px; top: 101px; display: flex; flex-direction: column; width: 151px; text-align: center; font: 400 20px/24px 'Playfair Display',serif; color: #565656; }
+.home-lifecare-title strong { font-size: 32px; line-height: 24px; font-weight: 600; color: #333; }
+.home-lifecare-mac-top { position: absolute; left: 0; top: 13px; width: 285px; height: 126px; overflow: hidden; }
+.home-lifecare-mac-top img { position: absolute; left: 0; top: -20.13%; width: 100%; height: 170.55%; max-width: none; }
+.home-lifecare-mac-base { position: absolute; left: 0; top: 136px; width: 165px; height: 40px; overflow: hidden; }
+.home-lifecare-mac-base img { position: absolute; left: 0; top: -366.98%; width: 173.26%; height: 529.48%; max-width: none; }
+.home-lifecare-phone { position: absolute; left: 47px; top: 96px; width: 44px; height: 91px; object-fit: contain; }
 .art p { margin: 0; }
 .art .art-desktop > div, .art .art-mobile > div { overflow: hidden; }
 .project-link { display: flex; align-items: center; justify-content: center; position: absolute; right: 32px; top: 24px; width: 48px; height: 48px; border-radius: 50%; background: #fefefee6; box-shadow: 0 10px 15px #0000001a, 0 4px 6px #0000001a; z-index: 1; transition: transform .15s; }
