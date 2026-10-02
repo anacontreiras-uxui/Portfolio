@@ -247,24 +247,29 @@ if (toolIcons.length) {
   tooltip.hidden = true;
   tooltip.setAttribute('aria-hidden', 'true');
   document.documentElement.appendChild(tooltip);
-  const hideTooltip = () => { tooltip.hidden = true; };
-  const moveTooltip = event => {
-    if (tooltip.hidden) return;
-    tooltip.style.left = `${Math.max(8, Math.min(event.clientX + 12, innerWidth - tooltip.offsetWidth - 8))}px`;
-    tooltip.style.top = `${Math.max(8, Math.min(event.clientY + 18, innerHeight - tooltip.offsetHeight - 8))}px`;
+  let activeTooltipIcon = null;
+  const hideTooltip = () => { tooltip.hidden = true; activeTooltipIcon = null; };
+  const positionTooltip = icon => {
+    const iconRect = icon.getBoundingClientRect();
+    const tooltipRect = tooltip.getBoundingClientRect();
+    const left = iconRect.left + (iconRect.width - tooltipRect.width) / 2;
+    const below = iconRect.bottom + 8;
+    tooltip.style.left = `${Math.max(8, Math.min(left, innerWidth - tooltipRect.width - 8))}px`;
+    tooltip.style.top = `${below + tooltipRect.height + 8 <= innerHeight ? below : iconRect.top - tooltipRect.height - 8}px`;
   };
   toolIcons.forEach(icon => {
-    icon.addEventListener('pointerenter', event => {
+    icon.addEventListener('pointerenter', () => {
       if (!desktopHover.matches) return;
       const image = [...icon.querySelectorAll('img')].find(img => img.offsetWidth);
       tooltip.textContent = image?.alt || '';
       tooltip.hidden = !tooltip.textContent;
-      moveTooltip(event);
+      if (!tooltip.hidden) { activeTooltipIcon = icon; positionTooltip(icon); }
     });
-    icon.addEventListener('pointermove', moveTooltip);
     icon.addEventListener('pointerleave', hideTooltip);
   });
-  window.addEventListener('scroll', hideTooltip, { passive: true, capture: true });
+  window.addEventListener('scroll', () => {
+    if (activeTooltipIcon) positionTooltip(activeTooltipIcon);
+  }, { passive: true, capture: true });
   window.addEventListener('blur', hideTooltip);
   desktopHover.addEventListener('change', hideTooltip);
 }

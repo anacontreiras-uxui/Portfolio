@@ -1,16 +1,20 @@
 import { test, expect } from '@playwright/test';
 
 test('Tool names stay beside the pointer on wide desktop screens', async ({ page }) => {
-  await page.setViewportSize({ width: 1920, height: 1080 });
-  await page.goto('/sobre-mim.html');
-  const icon = page.locator('.tool-logo').first();
-  await icon.hover();
-  const pointer = await icon.boundingBox();
-  const tooltip = page.locator('.tool-tooltip');
-  await expect(tooltip).toBeVisible();
-  const label = await tooltip.boundingBox();
-  expect(Math.abs(label.x - (pointer.x + pointer.width / 2))).toBeLessThan(24);
-  expect(Math.abs(label.y - (pointer.y + pointer.height / 2))).toBeLessThan(40);
+  for (const width of [1920, 2560]) {
+    await page.setViewportSize({ width, height: 1080 });
+    await page.goto('/sobre-mim.html');
+    const icon = page.locator('.tool-logo').first();
+    await icon.evaluate(element => element.scrollIntoView({ block: 'center' }));
+    await icon.hover();
+    const iconBox = await icon.boundingBox();
+    const tooltip = page.locator('.tool-tooltip');
+    await expect(tooltip).toBeVisible();
+    const label = await tooltip.boundingBox();
+    expect(Math.abs(label.x + label.width / 2 - (iconBox.x + iconBox.width / 2))).toBeLessThan(3);
+    expect(label.y - (iconBox.y + iconBox.height)).toBeGreaterThanOrEqual(6);
+    expect(label.y - (iconBox.y + iconBox.height)).toBeLessThanOrEqual(10);
+  }
 });
 
 const green = 'rgb(65, 98, 82)';
