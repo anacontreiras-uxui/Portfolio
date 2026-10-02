@@ -27,7 +27,7 @@ const setupResearchPhonePreview = (researchArtwork, screens, roleHost) => {
     if (!item.video) return null;
     const video = document.createElement('video');
     video.src = item.video;
-    video.preload = 'auto';
+    video.preload = 'none';
     video.muted = true;
     video.playsInline = true;
     video.setAttribute('aria-hidden', 'true');
@@ -258,7 +258,9 @@ document.querySelectorAll('[data-case-tabs]').forEach(group => {
         const visibleVersion = mobile
           ? video.closest('.case-panel-mobile')
           : video.closest('.case-panel-desktop');
-        if (panel.hidden || !visibleVersion) {
+        const bounds = video.getBoundingClientRect();
+        const nearViewport = bounds.bottom > -300 && bounds.top < window.innerHeight + 300;
+        if (panel.hidden || !visibleVersion || !nearViewport) {
           video.pause();
           const control = audioControls.find(item => item.video === video);
           if (control) {
@@ -291,6 +293,8 @@ document.querySelectorAll('[data-case-tabs]').forEach(group => {
     });
   });
   window.addEventListener('resize', syncPanelVideos, { passive: true });
+  const videoObserver = new IntersectionObserver(syncPanelVideos, { rootMargin: '300px 0px' });
+  panels.forEach(panel => panel.querySelectorAll('.case-screen-video').forEach(video => videoObserver.observe(video)));
   syncPanelVideos();
 });
 document.querySelectorAll('.case-range').forEach(input => {

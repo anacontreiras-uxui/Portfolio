@@ -1,3 +1,28 @@
+// Keep first visit readable while above-the-fold artwork and fonts arrive.
+const firstViewImages = [...document.images].filter(img => {
+  const imageBounds = img.getBoundingClientRect();
+  const bounds = imageBounds.width && imageBounds.height ? imageBounds : img.parentElement.getBoundingClientRect();
+  return bounds.width > 0 && bounds.height > 0 && bounds.top < window.innerHeight && bounds.bottom > 0;
+});
+const firstViewNeedsLoading = firstViewImages.some(img => !img.complete) || document.fonts.status === 'loading';
+if (firstViewNeedsLoading) {
+  const loader = document.createElement('div');
+  loader.className = 'page-loading';
+  loader.setAttribute('role', 'status');
+  loader.setAttribute('aria-live', 'polite');
+  loader.innerHTML = `<span class="page-loading-mark" aria-hidden="true"></span><span>${window.portfolioI18n?.language === 'en' ? 'Loading portfolio…' : 'A carregar portefólio…'}</span>`;
+  document.body.append(loader);
+  firstViewImages.forEach(img => { img.loading = 'eager'; });
+  const imagesReady = Promise.allSettled(firstViewImages.map(img => img.decode()));
+  Promise.race([
+    Promise.all([imagesReady, document.fonts.ready]),
+    new Promise(resolve => setTimeout(resolve, 4500))
+  ]).then(() => {
+    loader.classList.add('page-loading-done');
+    setTimeout(() => loader.remove(), 250);
+  });
+}
+
 const menuToggle = document.querySelector('#menu-toggle');
 const mobileNav = document.querySelector('#mobile-nav');
 const languageToggle = document.querySelector('#language-toggle');
