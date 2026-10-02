@@ -11,6 +11,14 @@ for (const width of [393, 1400]) {
       const video = card.locator('video');
       const button = page.locator(`#panel-${index} [data-audio-toggle]:visible`);
       await expect(button).toBeVisible();
+      await expect(button.locator('svg')).toBeVisible();
+      if (width <= 700) {
+        const buttonBox = await button.boundingBox();
+        const summaryBox = await card.locator('.cupra-mobile-summary').boundingBox();
+        await expect(button).toHaveCSS('top', '16px');
+        await expect(button).toHaveCSS('right', '16px');
+        expect(buttonBox.y + buttonBox.height).toBeLessThan(summaryBox.y);
+      }
       await expect.poll(() => video.evaluate(element => element.videoWidth)).toBeGreaterThan(0);
       await expect(button).toHaveAttribute('aria-pressed', 'false');
       expect(await video.evaluate(element => element.muted)).toBe(true);

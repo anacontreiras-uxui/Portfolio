@@ -234,7 +234,7 @@ document.querySelectorAll('[data-case-tabs]').forEach(group => {
         const update = () => {
           const enabled = !video.muted;
           const english = window.portfolioI18n?.language === 'en';
-          button.textContent = `${enabled ? '🔊' : '🔇'} ${english ? (enabled ? 'Sound on' : 'Sound off') : (enabled ? 'Som ligado' : 'Som desligado')}`;
+          button.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Z"/>${enabled ? '<path d="M16 9a4 4 0 0 1 0 6"/><path d="M18.5 6.5a7.5 7.5 0 0 1 0 11"/>' : '<path d="m17 9 5 6m0-6-5 6"/>'}</svg>`;
           button.setAttribute('aria-pressed', String(enabled));
           button.setAttribute('aria-label', english ? (enabled ? 'Turn sound off' : 'Turn sound on') : (enabled ? 'Desligar som' : 'Ligar som'));
         };
