@@ -217,6 +217,40 @@ document.querySelectorAll('[data-case-width]').forEach(el => caseArtObserver.obs
 document.querySelectorAll('[data-case-tabs]').forEach(group => {
   const tabs = [...group.querySelectorAll('[role="tab"]')];
   const panels = tabs.map(tab => document.getElementById(tab.getAttribute('aria-controls')));
+  const audioControls = [];
+  if (document.body.classList.contains('case-cupra')) {
+    panels.slice(0, 2).forEach(panel => {
+      panel.querySelectorAll(':scope > .case-panel-desktop, :scope > .case-panel-mobile').forEach(card => {
+        const video = card.querySelector('.case-screen-video');
+        if (!video) return;
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'cupra-audio-toggle';
+        button.dataset.audioToggle = '';
+        const isDesktop = card.classList.contains('case-panel-desktop');
+        button.dataset.device = isDesktop ? 'desktop' : 'mobile';
+        video.id = `cupra-video-${panel.id}-${button.dataset.device}`;
+        button.setAttribute('aria-controls', video.id);
+        const update = () => {
+          const enabled = !video.muted;
+          const english = window.portfolioI18n?.language === 'en';
+          button.textContent = `${enabled ? '🔊' : '🔇'} ${english ? (enabled ? 'Sound on' : 'Sound off') : (enabled ? 'Som ligado' : 'Som desligado')}`;
+          button.setAttribute('aria-pressed', String(enabled));
+          button.setAttribute('aria-label', english ? (enabled ? 'Turn sound off' : 'Turn sound on') : (enabled ? 'Desligar som' : 'Ligar som'));
+        };
+        video.muted = true;
+        update();
+        button.addEventListener('click', () => {
+          video.muted = !video.muted;
+          update();
+          if (video.paused) video.play().catch(() => {});
+        });
+        (isDesktop ? panel : card).append(button);
+        audioControls.push({ video, update });
+      });
+    });
+    window.addEventListener('portfolio-language-change', () => audioControls.forEach(({ update }) => update()));
+  }
   const syncPanelVideos = () => {
     const mobile = window.matchMedia('(max-width: 700px)').matches;
     panels.forEach(panel => {
@@ -226,6 +260,11 @@ document.querySelectorAll('[data-case-tabs]').forEach(group => {
           : video.closest('.case-panel-desktop');
         if (panel.hidden || !visibleVersion) {
           video.pause();
+          const control = audioControls.find(item => item.video === video);
+          if (control) {
+            video.muted = true;
+            control.update();
+          }
           return;
         }
         video.play().catch(() => {});
@@ -524,8 +563,8 @@ const mobileFeaturePopups = [
     ]
   },
   {
-    "title": "Conselhos gerais",
-    "description": "Materiais educativos, guias e conselhos práticos para ajudar no dia a dia.",
+    "title": "Conteúdos e recursos de apoio",
+    "description": "Acesso rápido a informação essencial e contactos úteis, com linguagem simples e fácil de compreender.",
     "image": "./assets/309de.png",
     "points": [
       {

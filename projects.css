@@ -115,6 +115,10 @@
 .case-cupra .case-panel-desktop .case-canvas div:has(> p[style*="color:#f4f4f4"][style*="font-size:14px"]) { height: auto !important; }
 .case-panel-mobile { display: none; }
 .case-screen-video { display: block; object-fit: cover; }
+.case-cupra .case-panels > [role=tabpanel], .case-cupra .case-panel-mobile { position: relative; }
+.case-cupra .cupra-audio-toggle { position: absolute; z-index: 2; right: 20px; bottom: 20px; display: inline-flex; align-items: center; justify-content: center; min-height: 42px; padding: 8px 14px; border: 1px solid #f4f4f488; border-radius: 999px; background: #121212e8; color: #f8f8f8; font: 500 14px/20px Inter,sans-serif; cursor: pointer; }
+.case-cupra .cupra-audio-toggle:hover, .case-cupra .cupra-audio-toggle:focus-visible { border-color: #c8783a; background: #2d221a; outline-color: #c8783a; }
+@media (max-width: 700px) { .case-cupra .cupra-audio-toggle[data-device="desktop"] { display: none; } }
 .case-impact { border-top: 40px solid #4a6c5e; padding-block: 64px; }
 .case-impact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
 .case-impact-grid > article { border-radius: 18px; padding: 40px; background: white; }
