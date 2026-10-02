@@ -246,7 +246,7 @@ if (toolIcons.length) {
   tooltip.className = 'tool-tooltip';
   tooltip.hidden = true;
   tooltip.setAttribute('aria-hidden', 'true');
-  document.body.appendChild(tooltip);
+  document.documentElement.appendChild(tooltip);
   const hideTooltip = () => { tooltip.hidden = true; };
   const moveTooltip = event => {
     if (tooltip.hidden) return;
