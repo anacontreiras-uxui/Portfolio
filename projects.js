@@ -388,7 +388,8 @@ function createFeaturePanel(device, title, trigger) {
     return;
   }
   const imagePath = featurePopupFiles[device]?.[title];
-  if (!imagePath) return;
+  const feature = mobileFeaturePopups.find(item => item.title === title);
+  if (!imagePath && !feature) return;
   closeFeaturePopup(false);
   const panel = getDesktopFeatureDialog();
   panel.classList.toggle('clinical-popup', device === 'desktop');
@@ -405,9 +406,8 @@ function createFeaturePanel(device, title, trigger) {
   close.setAttribute('aria-label', 'Fechar pop-up');
   close.textContent = '×';
   close.addEventListener('click', closeFeaturePopup);
-  const feature = (device === 'desktop' || window.portfolioI18n?.language === 'en')
-    ? mobileFeaturePopups.find(feature => feature.title === title) : null;
-  if (feature) {
+  const useFeatureContent = feature && (device === 'desktop' || window.portfolioI18n?.language === 'en' || !imagePath);
+  if (useFeatureContent) {
     preview.classList.add('feature-popup-english');
     populateFeatureContent(preview, feature, closeFeaturePopup, 'desktop-feature');
     panel.setAttribute('aria-labelledby', 'desktop-feature-title');
@@ -524,8 +524,8 @@ const mobileFeaturePopups = [
     ]
   },
   {
-    "title": "Conteúdos e recursos de apoio",
-    "description": "Acesso rápido a informação essencial e contactos úteis, com linguagem simples e fácil de compreender.",
+    "title": "Conselhos gerais",
+    "description": "Materiais educativos, guias e conselhos práticos para ajudar no dia a dia.",
     "image": "./assets/309de.png",
     "points": [
       {

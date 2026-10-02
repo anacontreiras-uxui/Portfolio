@@ -63,6 +63,10 @@ test('Lifecare desktop redesign preserves comparisons and popups', async ({ page
   await expect(page.locator('.feature-popup-design')).not.toHaveAttribute('src', './assets/lifecare-popup-desktop-diary.png');
   await page.locator('.feature-popup-dismiss').click();
   await expect(page.locator('.feature-popup-design')).toHaveCount(0);
+  await page.locator('[data-device="mobile"][data-hotspot-title="Conselhos gerais"]').click();
+  await expect(page.locator('.lifecare-desktop-feature-dialog .mobile-feature-title')).toHaveText('Conselhos gerais');
+  await expect(page.locator('.lifecare-desktop-feature-dialog .mobile-feature-screen')).toHaveAttribute('src', './assets/309de.png');
+  await page.locator('.lifecare-desktop-feature-dialog .mobile-feature-close').click();
   await page.locator('[data-device="desktop"][data-hotspot-title="Gestão de pacientes"]').click();
   await expect(page.locator('.lifecare-desktop-feature-dialog .mobile-clinical-laptop')).toBeVisible();
   await page.locator('.lifecare-desktop-feature-dialog .mobile-feature-close').click();
@@ -96,6 +100,10 @@ test('Lifecare mobile follows refreshed design and keeps interactions', async ({
   await page.locator('#evolution-tab-1').click();
   await expect(page.locator('#comparison-1')).toBeVisible();
   await expect(page.locator('#comparison-1 .mobile-comparison-screen[src="./assets/53361.jpg"]')).toBeVisible();
+  await page.locator('[data-device="mobile"][data-hotspot-title="Conselhos gerais"]').click();
+  await expect(page.locator('.lifecare-mobile-feature-dialog .mobile-feature-title')).toHaveText('Conselhos gerais');
+  await expect(page.locator('.lifecare-mobile-feature-dialog .mobile-feature-screen')).toHaveAttribute('src', './assets/309de.png');
+  await page.locator('.lifecare-mobile-feature-dialog .mobile-feature-close').click();
 });
 
 test('New Lifecare desktop copy follows language selection', async ({ page }) => {

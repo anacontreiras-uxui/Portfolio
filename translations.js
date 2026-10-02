@@ -565,6 +565,8 @@ window.portfolioTranslations = {
   "Memória do dia a dia": "Everyday memories",
   "Ajuda a recordar mudanças e padrões.": "Helps you recall changes and patterns.",
   "Conteúdos e recursos de apoio": "Support content and resources",
+  "Conselhos gerais": "General advice",
+  "Materiais educativos, guias e conselhos práticos para ajudar no dia a dia.": "Educational materials, guides and practical advice for everyday life.",
   "Acesso rápido a informação essencial e contactos úteis, com linguagem simples e fácil de compreender.": "Quick access to essential information and useful contacts, in clear, easy-to-understand language.",
   "Informação de confiança": "Trustworthy information",
   "Conteúdos essenciais e validados.": "Essential, validated content.",
